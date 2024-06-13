@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Carousel</title>
+    <style>
+        :root {
+            --active-width: 60vw;
+            --active-height: 55vh;
+            --inactive-width: 60vw;
+            --inactive-height: 20vh;
+            --active-color: yellow;
+            --inactive-color: black;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 60vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: var(--inactive-width);
+            height: var(--inactive-height);
+            margin: 10px 0;
+            background-color: var(--inactive-color);
+            transition: width 0.5s, height 0.5s, background-color 0.5s;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .carousel-item.active {
+            width: var(--active-width);
+            height: var(--active-height);
+            background-color: var(--active-color);
+            color: black;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-item">
+                Item 1
+            </div>
+            <div class="carousel-item active">
+                Item 2
+            </div>
+            <div class="carousel-item">
+                Item 3
+            </div>
+            <div class="carousel-item hidden">
+                Item 4
+            </div>
+            <div class="carousel-item hidden">
+                Item 5
+            </div>
+            <div class="carousel-item hidden">
+                Item 6
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentIndex = 1;
+
+        function updateCarousel() {
+            const items = document.querySelectorAll('.carousel-item');
+            const totalItems = items.length;
+
+            items.forEach(item => item.classList.add('hidden'));
+            
+            const prevIndex = (currentIndex - 1 + totalItems) % totalItems;
+            const nextIndex = (currentIndex + 1) % totalItems;
+
+            items[prevIndex].classList.remove('hidden');
+            items[prevIndex].classList.remove('active');
+            items[prevIndex].style.height = 'var(--inactive-height)';
+            
+            items[currentIndex].classList.remove('hidden');
+            items[currentIndex].classList.add('active');
+            items[currentIndex].style.height = 'var(--active-height)';
+
+            items[nextIndex].classList.remove('hidden');
+            items[nextIndex].classList.remove('active');
+            items[nextIndex].style.height = 'var(--inactive-height)';
+        }
+
+        function moveCarousel() {
+            const items = document.querySelectorAll('.carousel-item');
+            currentIndex = (currentIndex + 1) % items.length;
+            updateCarousel();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCarousel();
+            setInterval(moveCarousel, 3000);
+        });
+    </script>
+</body>
+</html>
