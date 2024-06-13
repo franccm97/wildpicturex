@@ -6,12 +6,10 @@
     <title>Vertical Carousel</title>
     <style>
         :root {
-            --active-width: 60vw;
+            --active-width: 85vw;
             --active-height: 55vh;
-            --inactive-width: 60vw;
+            --inactive-width: 20vw;
             --inactive-height: 20vh;
-            --active-color: yellow;
-            --inactive-color: black;
         }
 
         body {
@@ -48,7 +46,9 @@
             width: var(--inactive-width);
             height: var(--inactive-height);
             margin: 10px 0;
-            background-color: var(--inactive-color);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
             transition: width 0.5s, height 0.5s, background-color 0.5s;
             color: white;
             font-size: 1.5em;
@@ -64,33 +64,46 @@
         .hidden {
             display: none;
         }
+
+        .logo{
+            
+        }
     </style>
 </head>
 <body>
     <div class="carousel-container">
-        <div class="carousel">
-            <div class="carousel-item">
-                Item 1
-            </div>
-            <div class="carousel-item active">
-                Item 2
-            </div>
-            <div class="carousel-item">
-                Item 3
-            </div>
-            <div class="carousel-item hidden">
-                Item 4
-            </div>
-            <div class="carousel-item hidden">
-                Item 5
-            </div>
-            <div class="carousel-item hidden">
-                Item 6
-            </div>
+        <div class="logo">
+
+        </div>
+        <div id="carousel" class="carousel">
+            <!-- Items will be injected here by JavaScript -->
         </div>
     </div>
     <script>
-        let currentIndex = 1;
+        const itemsArray = [
+            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-6.png',
+            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-5.png',
+            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-4.png',
+            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-3.png',
+            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-2.png',
+            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-1.png'
+        ];
+
+        const carousel = document.getElementById('carousel');
+
+        itemsArray.map((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'carousel-item';
+            div.style.backgroundImage = `url(${item})`;
+            if (index === 0) {
+                div.classList.add('active');
+            } else if (index > 2) {
+                div.classList.add('hidden');
+            }
+            carousel.appendChild(div);
+        });
+
+        let currentIndex = 0;
 
         function updateCarousel() {
             const items = document.querySelectorAll('.carousel-item');
@@ -101,13 +114,22 @@
             const prevIndex = (currentIndex - 1 + totalItems) % totalItems;
             const nextIndex = (currentIndex + 1) % totalItems;
 
+            items.forEach(item => {
+                item.classList.remove('active');
+                item.style.width = 'var(--inactive-width)';
+                item.style.height = 'var(--inactive-height)';
+                item.style.backgroundColor = 'var(--inactive-color)';
+            });
+
             items[prevIndex].classList.remove('hidden');
             items[prevIndex].classList.remove('active');
             items[prevIndex].style.height = 'var(--inactive-height)';
             
             items[currentIndex].classList.remove('hidden');
             items[currentIndex].classList.add('active');
+            items[currentIndex].style.width = 'var(--active-width)';
             items[currentIndex].style.height = 'var(--active-height)';
+            items[currentIndex].style.backgroundColor = 'var(--active-color)';
 
             items[nextIndex].classList.remove('hidden');
             items[nextIndex].classList.remove('active');
