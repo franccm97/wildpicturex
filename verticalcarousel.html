@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vertical Carousel</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
         :root {
-            --active-width: 85vw;
+            --active-width: 120vw; /* Aumenta la anchura activa */
             --active-height: 55vh;
             --inactive-width: 20vw;
             --inactive-height: 20vh;
+            --logo-width: 546px;
+            --logo-height: 60px;
+            --caption-word-spacing: 40px; /* Espacio entre palabras del caption */
         }
 
         body {
@@ -18,12 +23,13 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #fff; /* Fondo blanco */
+            font-family: 'Inter', sans-serif;
         }
 
         .carousel-container {
             position: relative;
-            width: 60vw;
+            width: 100%;
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -40,63 +46,101 @@
         }
 
         .carousel-item {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             width: var(--inactive-width);
             height: var(--inactive-height);
             margin: 10px 0;
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center;
-            transition: width 0.5s, height 0.5s, background-color 0.5s;
-            color: white;
-            font-size: 1.5em;
+            transition: width 0.5s, height 0.5s;
+            overflow: hidden;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Mantiene la proporción de la imagen */
         }
 
         .carousel-item.active {
-            width: var(--active-width);
+            width: var(--active-width); /* Aumenta la anchura activa */
             height: var(--active-height);
-            background-color: var(--active-color);
-            color: black;
         }
 
         .hidden {
             display: none;
         }
 
-        .logo{
-            
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            mix-blend-mode: difference;
+        }
+
+        .logo-container {
+            padding-left: 20px;
+            width: calc(var(--logo-width) + 30%);
+        }
+
+        .logo-container img {
+            width: var(--logo-width);
+            height: var(--logo-height);
+        }
+
+        .caption-container {
+            font-size: 14px;
+            font-weight: 400    ;
+            white-space: nowrap;
+            padding-right: 20px;
+            color: white; /* Color del texto sobre la imagen */
+            word-spacing: var(--caption-word-spacing); /* Espacio entre palabras del caption */
         }
     </style>
 </head>
 <body>
     <div class="carousel-container">
-        <div class="logo">
-
+        <div class="overlay">
+            <div class="logo-container">
+                <img src="https://francc7.sg-host.com/wp-content/uploads/2024/06/Capa_1.svg" alt="Logo">
+            </div>
+            <div id="caption" class="caption-container"></div>
         </div>
         <div id="carousel" class="carousel">
-            <!-- Items will be injected here by JavaScript -->
+            <!-- Items serán inyectados aquí por JavaScript -->
         </div>
     </div>
     <script>
         const itemsArray = [
-            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-6.png',
-            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-5.png',
-            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-4.png',
-            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-3.png',
-            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-2.png',
-            'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-1.png'
+            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-6.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 1' },
+            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-5.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 2' },
+            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-4.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 3' },
+            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-3.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 4' },
+            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-2.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 5' },
+            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-1.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 6' }
         ];
 
         const carousel = document.getElementById('carousel');
+        const captionContainer = document.getElementById('caption');
 
         itemsArray.map((item, index) => {
             const div = document.createElement('div');
             div.className = 'carousel-item';
-            div.style.backgroundImage = `url(${item})`;
+            const img = document.createElement('img');
+            img.src = item.img;
+
+            div.appendChild(img);
+
             if (index === 0) {
                 div.classList.add('active');
+                captionContainer.textContent = item.caption;
             } else if (index > 2) {
                 div.classList.add('hidden');
             }
@@ -110,7 +154,7 @@
             const totalItems = items.length;
 
             items.forEach(item => item.classList.add('hidden'));
-            
+
             const prevIndex = (currentIndex - 1 + totalItems) % totalItems;
             const nextIndex = (currentIndex + 1) % totalItems;
 
@@ -118,22 +162,26 @@
                 item.classList.remove('active');
                 item.style.width = 'var(--inactive-width)';
                 item.style.height = 'var(--inactive-height)';
-                item.style.backgroundColor = 'var(--inactive-color)';
             });
 
             items[prevIndex].classList.remove('hidden');
             items[prevIndex].classList.remove('active');
             items[prevIndex].style.height = 'var(--inactive-height)';
-            
+
             items[currentIndex].classList.remove('hidden');
             items[currentIndex].classList.add('active');
-            items[currentIndex].style.width = 'var(--active-width)';
+            items[currentIndex].style.width = 'var(--active-width)'; /* Aumenta la anchura activa */
             items[currentIndex].style.height = 'var(--active-height)';
-            items[currentIndex].style.backgroundColor = 'var(--active-color)';
 
             items[nextIndex].classList.remove('hidden');
             items[nextIndex].classList.remove('active');
             items[nextIndex].style.height = 'var(--inactive-height)';
+
+            captionContainer.textContent = itemsArray[currentIndex].caption;
+
+            // Log dimensions of the active image
+            const activeImage = items[currentIndex].querySelector('img');
+            console.log(`Active image dimensions: ${activeImage.naturalWidth}px x ${activeImage.naturalHeight}px`);
         }
 
         function moveCarousel() {
