@@ -8,13 +8,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
         :root {
-            --active-width: 120vw; /* Aumenta la anchura activa */
-            --active-height: 55vh;
-            --inactive-width: 20vw;
-            --inactive-height: 20vh;
-            --logo-width: 546px;
-            --logo-height: 60px;
-            --caption-word-spacing: 40px; /* Espacio entre palabras del caption */
+            --active-height: 65vh;
+            --inactive-height: 25vh;
         }
 
         body {
@@ -23,7 +18,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #fff; /* Fondo blanco */
+            background-color: #fff;
             font-family: 'Inter', sans-serif;
         }
 
@@ -50,22 +45,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: var(--inactive-width);
             height: var(--inactive-height);
+            width: auto;
             margin: 10px 0;
-            transition: width 0.5s, height 0.5s;
+            transition: height 0.5s, filter 0.5s;
             overflow: hidden;
         }
 
         .carousel-item img {
-            width: 100%;
             height: 100%;
-            object-fit: contain; /* Mantiene la proporción de la imagen */
+            width: auto;
+            object-fit: cover; 
         }
 
         .carousel-item.active {
-            width: var(--active-width); /* Aumenta la anchura activa */
             height: var(--active-height);
+            width: auto;
+        }
+
+        .carousel-item.inactive {
+            width: 25vw;
+        }
+
+        .carousel-item.active:hover img {
+            filter: blur(5px);
         }
 
         .hidden {
@@ -87,21 +90,20 @@
 
         .logo-container {
             padding-left: 20px;
-            width: calc(var(--logo-width) + 30%);
         }
 
         .logo-container img {
-            width: var(--logo-width);
-            height: var(--logo-height);
+            width: 546px;
+            height: 60px;
         }
 
         .caption-container {
             font-size: 14px;
-            font-weight: 400    ;
+            font-weight: 400;
             white-space: nowrap;
             padding-right: 20px;
-            color: white; /* Color del texto sobre la imagen */
-            word-spacing: var(--caption-word-spacing); /* Espacio entre palabras del caption */
+            color: white;
+            word-spacing: 40px;
         }
     </style>
 </head>
@@ -118,31 +120,90 @@
         </div>
     </div>
     <script>
-        const itemsArray = [
-            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-6.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 1' },
-            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-5.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 2' },
-            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-4.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 3' },
-            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-3.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 4' },
-            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-2.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 5' },
-            { img: 'https://francc7.sg-host.com/wp-content/uploads/2024/06/Property-1XL-1.png', caption: 'CAMPAIGN X VOGUE EYEWEAR SERVICES X RAYO PRODUCTIONS 6' }
+        const projects = [
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png',
+                url: 'https://francc7.sg-host.com/project-1',
+                project: 'STREET SPRING CAMPAIGN 2024',
+                client: 'ZALANDO',
+                productServices: 'RAYO PRODUCTIONS'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-8-1.png',
+                url: 'https://francc7.sg-host.com/project-2',
+                project: 'Project 2',
+                client: 'Client 2',
+                productServices: 'Product/Services 2'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png',
+                url: 'https://francc7.sg-host.com/project-3',
+                project: 'Project 3',
+                client: 'Client 3',
+                productServices: 'Product/Services 3'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-10.png',
+                url: 'https://francc7.sg-host.com/project-4',
+                project: 'Project 4',
+                client: 'Client 4',
+                productServices: 'Product/Services 4'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png',
+                url: 'https://francc7.sg-host.com/project-5',
+                project: 'Project 5',
+                client: 'Client 5',
+                productServices: 'Product/Services 5'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png',
+                url: 'https://francc7.sg-host.com/project-6',
+                project: 'Project 6',
+                client: 'Client 6',
+                productServices: 'Product/Services 6'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png',
+                url: 'https://francc7.sg-host.com/project-7',
+                project: 'Project 7',
+                client: 'Client 7',
+                productServices: 'Product/Services 7'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png',
+                url: 'https://francc7.sg-host.com/project-8',
+                project: 'Project 8',
+                client: 'Client 8',
+                productServices: 'Product/Services 8'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png',
+                url: 'https://francc7.sg-host.com/project-9',
+                project: 'Project 9',
+                client: 'Client 9',
+                productServices: 'Product/Services 9'
+            }
         ];
 
         const carousel = document.getElementById('carousel');
         const captionContainer = document.getElementById('caption');
 
-        itemsArray.map((item, index) => {
+        projects.forEach((project, index) => {
             const div = document.createElement('div');
             div.className = 'carousel-item';
+            const link = document.createElement('a');
+            link.href = project.url;
+            link.target = '_blank';
             const img = document.createElement('img');
-            img.src = item.img;
+            img.src = project.image;
 
-            div.appendChild(img);
+            link.appendChild(img);
+            div.appendChild(link);
 
             if (index === 0) {
                 div.classList.add('active');
-                captionContainer.textContent = item.caption;
-            } else if (index > 2) {
-                div.classList.add('hidden');
+                captionContainer.textContent = project.project;
             }
             carousel.appendChild(div);
         });
@@ -160,28 +221,21 @@
 
             items.forEach(item => {
                 item.classList.remove('active');
-                item.style.width = 'var(--inactive-width)';
+                item.classList.remove('inactive');
                 item.style.height = 'var(--inactive-height)';
             });
 
             items[prevIndex].classList.remove('hidden');
-            items[prevIndex].classList.remove('active');
-            items[prevIndex].style.height = 'var(--inactive-height)';
+            items[prevIndex].classList.add('inactive');
 
             items[currentIndex].classList.remove('hidden');
             items[currentIndex].classList.add('active');
-            items[currentIndex].style.width = 'var(--active-width)'; /* Aumenta la anchura activa */
             items[currentIndex].style.height = 'var(--active-height)';
 
             items[nextIndex].classList.remove('hidden');
-            items[nextIndex].classList.remove('active');
-            items[nextIndex].style.height = 'var(--inactive-height)';
+            items[nextIndex].classList.add('inactive');
 
-            captionContainer.textContent = itemsArray[currentIndex].caption;
-
-            // Log dimensions of the active image
-            const activeImage = items[currentIndex].querySelector('img');
-            console.log(`Active image dimensions: ${activeImage.naturalWidth}px x ${activeImage.naturalHeight}px`);
+            captionContainer.textContent = projects[currentIndex].project;
         }
 
         function moveCarousel() {
