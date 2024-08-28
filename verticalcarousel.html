@@ -1,253 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vertical Carousel</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
-        :root {
-            --active-height: 65vh;
-            --inactive-height: 25vh;
-        }
+      :root {
+        --active-height: 65vh;
+        --inactive-height: 25vh;
+        --transition-duration: 0.5s; /* Animación más suave */
+      }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #fff;
-            font-family: 'Inter', sans-serif;
-        }
-/* hola */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        /* height: 100vh; */
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .carousel {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.5s ease;
-        }
+      .carousel {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform var(--transition-duration) ease;
+      }
 
-        .carousel-item {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: var(--inactive-height);
-            width: auto;
-            margin: 10px 0;
-            transition: height 0.5s, filter 0.5s;
-            overflow: hidden;
-        }
+      .carousel-item {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: var(--inactive-height);
+        width: 100%;
+        margin: 10px 0;
+        transition: height var(--transition-duration),
+          filter var(--transition-duration);
+        overflow: hidden;
+      }
 
-        .carousel-item img {
-            height: 100%;
-            width: auto;
-            object-fit: cover; 
-        }
+      .carousel-item img {
+        height: 100%;
+        width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        object-fit: contain;
+      }
 
-        .carousel-item.active {
-            height: var(--active-height);
-            width: auto;
-        }
+      .carousel-item.active {
+        height: var(--active-height);
+        width: 100%;
+        object-fit: cover !important;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
 
-        .carousel-item.inactive {
-            width: 25vw;
-        }
+      .carousel-item.inactive {
+        width: 25vw;
+      }
 
-        .carousel-item.active:hover img {
-            filter: blur(5px);
-        }
+      .carousel-item.active:hover img {
+        filter: blur(5px);
+      }
 
-        .hidden {
-            display: none;
-        }
+      .hidden {
+        display: none;
+      }
 
-        .overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            mix-blend-mode: difference;
-        }
+      .overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        mix-blend-mode: difference;
+      }
 
-        .logo-container {
-            padding-left: 20px;
-        }
+      .logo-container {
+        padding-left: 20px;
+      }
 
-        .logo-container img {
-            width: 546px;
-            height: 60px;
-        }
+      .logo-container img {
+        width: 100%;
+        height: 60px;
+      }
 
-        .caption-container {
-            font-size: 14px;
-            font-weight: 400;
-            white-space: nowrap;
-            padding-right: 20px;
-            color: white;
-            word-spacing: 40px;
-        }
+      .caption-container {
+        font-size: 14px;
+        font-weight: 400;
+        white-space: nowrap;
+        padding-right: 20px !important;
+        color: white;
+      }
+
+      .caption-container .with-section,
+      .caption-container .services-section,
+      .caption-container .index-section {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="carousel-container">
-        <div class="overlay">
-            <div class="logo-container">
-                <img src="https://francc7.sg-host.com/wp-content/uploads/2024/06/Capa_1.svg" alt="Logo">
-            </div>
-            <div id="caption" class="caption-container"></div>
+      <div class="overlay">
+        <div class="logo-container">
+          <img
+            src="https://francc7.sg-host.com/wp-content/uploads/2024/06/Capa_1.svg"
+            alt="Logo"
+          />
         </div>
-        <div id="carousel" class="carousel">
-            <!-- Items serán inyectados aquí por JavaScript -->
-        </div>
+        <div id="caption" class="caption-container"></div>
+      </div>
+      <div id="carousel" class="carousel">
+        <!-- Items serán inyectados aquí por JavaScript -->
+      </div>
     </div>
     <script>
-        const projects = [
-            {
-                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png',
-                url: 'https://francc7.sg-host.com/project-1',
-                project: 'STREET SPRING CAMPAIGN 2024',
-                client: 'ZALANDO',
-                productServices: 'RAYO PRODUCTIONS'
-            },
-            {
-                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-8-1.png',
-                url: 'https://francc7.sg-host.com/project-2',
-                project: 'Project 2',
-                client: 'Client 2',
-                productServices: 'Product/Services 2'
-            },
-            {
-                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png',
-                url: 'https://francc7.sg-host.com/project-3',
-                project: 'Project 3',
-                client: 'Client 3',
-                productServices: 'Product/Services 3'
-            },
-            {
-                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-10.png',
-                url: 'https://francc7.sg-host.com/project-4',
-                project: 'Project 4',
-                client: 'Client 4',
-                productServices: 'Product/Services 4'
-            },
-            {
-                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png',
-                url: 'https://francc7.sg-host.com/project-5',
-                project: 'Project 5',
-                client: 'Client 5',
-                productServices: 'Product/Services 5'
-            },
-            {
-                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png',
-                url: 'https://francc7.sg-host.com/project-6',
-                project: 'Project 6',
-                client: 'Client 6',
-                productServices: 'Product/Services 6'
-            },
-            {
-                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png',
-                url: 'https://francc7.sg-host.com/project-7',
-                project: 'Project 7',
-                client: 'Client 7',
-                productServices: 'Product/Services 7'
-            },
-            {
-                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png',
-                url: 'https://francc7.sg-host.com/project-8',
-                project: 'Project 8',
-                client: 'Client 8',
-                productServices: 'Product/Services 8'
-            },
-            {
-                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png',
-                url: 'https://francc7.sg-host.com/project-9',
-                project: 'Project 9',
-                client: 'Client 9',
-                productServices: 'Product/Services 9'
-            }
-        ];
+      const projects = [
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+          url: "https://francc7.sg-host.com/project-1",
+          project: "STREET SPRING CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-8-1.png",
+          url: "https://francc7.sg-host.com/project-2",
+          project: "Project 2",
+          client: "Client 2",
+          productServices: "Product/Services 2",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+          url: "https://francc7.sg-host.com/project-3",
+          project: "Project 3",
+          client: "Client 3",
+          productServices: "Product/Services 3",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-10.png",
+          url: "https://francc7.sg-host.com/project-4",
+          project: "Project 4",
+          client: "Client 4",
+          productServices: "Product/Services 4",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+          url: "https://francc7.sg-host.com/project-5",
+          project: "SHOPBOB SUMMER CAMPAING 2024",
+          client: "SHOPBOB",
+          productServices: "NORTH SIX",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+          url: "https://francc7.sg-host.com/project-6",
+          project: "ZARA MAN X CASA JOSEPHINE",
+          client: "ZARA",
+          productServices: "NORTH SIX",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+          url: "https://francc7.sg-host.com/project-7",
+          project: "Project 7",
+          client: "Client 7",
+          productServices: "Product/Services 7",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+          url: "https://francc7.sg-host.com/project-8",
+          project: "DESIGNER SPRING CAMPAING 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+          url: "https://francc7.sg-host.com/project-9",
+          project: "Project 9",
+          client: "Client 9",
+          productServices: "Product/Services 9",
+        },
+      ];
 
-        const carousel = document.getElementById('carousel');
-        const captionContainer = document.getElementById('caption');
+      const carousel = document.getElementById("carousel");
+      const captionContainer = document.getElementById("caption");
 
-        projects.forEach((project, index) => {
-            const div = document.createElement('div');
-            div.className = 'carousel-item';
-            const link = document.createElement('a');
-            link.href = project.url;
-            link.target = '_blank';
-            const img = document.createElement('img');
-            img.src = project.image;
+      // Selecciona un índice de inicio aleatorio
+      let currentIndex = Math.floor(Math.random() * projects.length);
 
-            link.appendChild(img);
-            div.appendChild(link);
+      // Crear elementos del carrusel y añadirlos
+      projects.forEach((project, index) => {
+        const div = createCarouselItem(project, index);
+        if (index === currentIndex) {
+          div.classList.add("active");
+          updateCaption(project, index);
+        }
+        carousel.appendChild(div);
+      });
 
-            if (index === 0) {
-                div.classList.add('active');
-                captionContainer.textContent = project.project;
-            }
-            carousel.appendChild(div);
+      // Clonar el primer y último elemento para bucle infinito
+      const firstClone = createCarouselItem(projects[0], 0);
+      const lastClone = createCarouselItem(
+        projects[projects.length - 1],
+        projects.length - 1
+      );
+      carousel.appendChild(firstClone);
+      carousel.insertBefore(lastClone, carousel.firstElementChild);
+
+      function createCarouselItem(project, index) {
+        const div = document.createElement("div");
+        div.className = "carousel-item";
+        const link = document.createElement("a");
+        link.href = project.url;
+        link.target = "_blank";
+        const img = document.createElement("img");
+        img.src = project.image;
+
+        link.appendChild(img);
+        div.appendChild(link);
+        return div;
+      }
+
+      function updateCaption(project, index) {
+        captionContainer.innerHTML = `${
+          project.project
+        } <span class="with-section">WITH</span> ${
+          project.client
+        } <span class="services-section">X</span> ${
+          project.productServices
+        } <span class="index-section">${formatIndex(index + 1)} / ${formatIndex(
+          projects.length
+        )}</span>`;
+      }
+
+      function updateCarousel() {
+        const items = document.querySelectorAll(".carousel-item");
+        const totalItems = items.length;
+
+        items.forEach((item) => item.classList.add("hidden"));
+
+        const prevIndex = (currentIndex - 1 + totalItems) % totalItems;
+        const nextIndex = (currentIndex + 1) % totalItems;
+
+        items.forEach((item) => {
+          item.classList.remove("active");
+          item.classList.remove("inactive");
+          item.style.height = "var(--inactive-height)";
         });
 
-        let currentIndex = 0;
+        items[prevIndex].classList.remove("hidden");
+        items[prevIndex].classList.add("inactive");
 
-        function updateCarousel() {
-            const items = document.querySelectorAll('.carousel-item');
-            const totalItems = items.length;
+        items[currentIndex].classList.remove("hidden");
+        items[currentIndex].classList.add("active");
+        items[currentIndex].style.height = "var(--active-height)";
 
-            items.forEach(item => item.classList.add('hidden'));
+        items[nextIndex].classList.remove("hidden");
+        items[nextIndex].classList.add("inactive");
 
-            const prevIndex = (currentIndex - 1 + totalItems) % totalItems;
-            const nextIndex = (currentIndex + 1) % totalItems;
+        const projectIndex =
+          (currentIndex - 1 + projects.length) % projects.length;
+        updateCaption(projects[projectIndex], projectIndex);
+      }
 
-            items.forEach(item => {
-                item.classList.remove('active');
-                item.classList.remove('inactive');
-                item.style.height = 'var(--inactive-height)';
-            });
+      function moveCarousel() {
+        const items = document.querySelectorAll(".carousel-item");
+        carousel.style.transition = "transform var(--transition-duration) ease";
+        currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
 
-            items[prevIndex].classList.remove('hidden');
-            items[prevIndex].classList.add('inactive');
-
-            items[currentIndex].classList.remove('hidden');
-            items[currentIndex].classList.add('active');
-            items[currentIndex].style.height = 'var(--active-height)';
-
-            items[nextIndex].classList.remove('hidden');
-            items[nextIndex].classList.add('inactive');
-
-            captionContainer.textContent = projects[currentIndex].project;
-        }
-
-        function moveCarousel() {
-            const items = document.querySelectorAll('.carousel-item');
-            currentIndex = (currentIndex + 1) % items.length;
+        if (currentIndex === items.length - 1) {
+          setTimeout(() => {
+            carousel.style.transition = "none";
+            currentIndex = 1;
             updateCarousel();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+              carousel.style.transition =
+                "transform var(--transition-duration) ease";
+            }, 50);
+          }, 500);
+        } else if (currentIndex === 0) {
+          setTimeout(() => {
+            carousel.style.transition = "none";
+            currentIndex = items.length - 2;
             updateCarousel();
-            setInterval(moveCarousel, 3000);
+            setTimeout(() => {
+              carousel.style.transition =
+                "transform var(--transition-duration) ease";
+            }, 50);
+          }, 500);
+        }
+      }
+
+      function formatIndex(index) {
+        return index < 10 ? "0" + index : index;
+      }
+
+      //start carousel
+      function startCarousel() {
+        intervalId = setInterval(moveCarousel, 3000);
+      }
+
+      //event hover stop carousel
+      function stopCarousel() {
+        clearInterval(intervalId);
+      }
+
+     
+
+      document.addEventListener("DOMContentLoaded", () => {
+        updateCarousel();
+        startCarousel(); // Iniciamos el carrusel al cargar la página
+
+        // Detectamos el evento hover en todos los elementos del carrusel
+        const carouselItems = document.querySelectorAll(".carousel-item");
+
+        carouselItems.forEach((item) => {
+          item.addEventListener("mouseover", () => {
+            isHovering = true;
+            stopCarousel(); // Pausamos el carrusel al pasar el mouse
+          });
+
+          item.addEventListener("mouseout", () => {
+            isHovering = false;
+            if (!isHovering) {
+              // Reiniciamos el carrusel si no estamos haciendo hover
+              startCarousel();
+            }
+          });
         });
+
+          const bodyElement = document.body;
+
+          bodyElement.addEventListener("click", (event) => {
+            if (isHovering === false) {
+            moveCarousel();
+          }
+          });
+      });
     </script>
-</body>
+  </body>
 </html>
