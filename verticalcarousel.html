@@ -12,15 +12,20 @@
         --inactive-height: 25vh;
         --transition-duration: 0.5s; /* Animación más suave */
       }
+      /* body {
+        overflow: hidden;
+        margin: 0;
+      } */
 
       .carousel-container {
         position: relative;
         width: 100%;
-        /* height: 100vh; */
+        height: 100vh;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 0;
       }
 
       .carousel {
@@ -29,6 +34,7 @@
         flex-direction: column;
         align-items: center;
         transition: transform var(--transition-duration) ease;
+        overflow: hidden;
       }
 
       .carousel-item {
@@ -103,12 +109,19 @@
         padding-right: 20px !important;
         color: white;
       }
-
+ 
       .caption-container .with-section,
       .caption-container .services-section,
       .caption-container .index-section {
         padding-left: 2.5rem;
         padding-right: 2.5rem;
+      }
+      @media only screen and (max-width: 600px) {
+        /* Styles for small screens (phones) */
+      }
+
+      @media only screen and (min-width: 601px) and (max-width: 768px) {
+        /* Styles for medium screens (tablets) */
       }
     </style>
   </head>
@@ -136,38 +149,43 @@
           project: "STREET SPRING CAMPAIGN 2024",
           client: "ZALANDO",
           productServices: "RAYO PRODUCTIONS",
+          num: "1 /09",
         },
         {
           image:
             "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-8-1.png",
           url: "https://francc7.sg-host.com/project-2",
-          project: "Project 2",
-          client: "Client 2",
-          productServices: "Product/Services 2",
+          project: "ARTRAPE RÊVES 2024",
+          client: "LOUIS VUITTON",
+          productServices: "HOLIDAYS PRODUCTION",
+          num: "2 /09",
         },
         {
           image:
             "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
           url: "https://francc7.sg-host.com/project-3",
-          project: "Project 3",
-          client: "Client 3",
-          productServices: "Product/Services 3",
+          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "3 /09",
         },
         {
           image:
             "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-10.png",
           url: "https://francc7.sg-host.com/project-4",
-          project: "Project 4",
-          client: "Client 4",
-          productServices: "Product/Services 4",
+          project: "COR",
+          client: "",
+          productServices: "LA BELLE FAÇON",
+          num: "4 /09",
         },
         {
           image:
             "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
           url: "https://francc7.sg-host.com/project-5",
-          project: "SHOPBOB SUMMER CAMPAING 2024",
+          project: "SUMMER CAMPAING 2024",
           client: "SHOPBOB",
           productServices: "NORTH SIX",
+          num: "5 /09",
         },
         {
           image:
@@ -176,14 +194,16 @@
           project: "ZARA MAN X CASA JOSEPHINE",
           client: "ZARA",
           productServices: "NORTH SIX",
+          num: "6 /09",
         },
         {
           image:
             "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
           url: "https://francc7.sg-host.com/project-7",
-          project: "Project 7",
-          client: "Client 7",
-          productServices: "Product/Services 7",
+          project: "CORE SPRING CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "7 /09",
         },
         {
           image:
@@ -192,14 +212,259 @@
           project: "DESIGNER SPRING CAMPAING 2024",
           client: "ZALANDO",
           productServices: "RAYO PRODUCTIONS",
+          num: "8 /09",
         },
         {
           image:
             "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
           url: "https://francc7.sg-host.com/project-9",
-          project: "Project 9",
-          client: "Client 9",
-          productServices: "Product/Services 9",
+          project: "DESTINATIONS SUMMER 2024",
+          client: "HARVEY NICHOLS",
+          productServices: "8AM MANAGEMENT",
+          num: "9 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+          url: "https://francc7.sg-host.com/project-1",
+          project: "STREET SPRING CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "1 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-8-1.png",
+          url: "https://francc7.sg-host.com/project-2",
+          project: "ARTRAPE RÊVES 2024",
+          client: "LOUIS VUITTON",
+          productServices: "HOLIDAYS PRODUCTION",
+          num: "2 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+          url: "https://francc7.sg-host.com/project-3",
+          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "3 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-10.png",
+          url: "https://francc7.sg-host.com/project-4",
+          project: "COR",
+          client: "",
+          productServices: "LA BELLE FAÇON",
+          num: "4 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+          url: "https://francc7.sg-host.com/project-5",
+          project: "SUMMER CAMPAING 2024",
+          client: "SHOPBOB",
+          productServices: "NORTH SIX",
+          num: "5 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+          url: "https://francc7.sg-host.com/project-6",
+          project: "ZARA MAN X CASA JOSEPHINE",
+          client: "ZARA",
+          productServices: "NORTH SIX",
+          num: "6 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+          url: "https://francc7.sg-host.com/project-7",
+          project: "CORE SPRING CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "7 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+          url: "https://francc7.sg-host.com/project-8",
+          project: "DESIGNER SPRING CAMPAING 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "8 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+          url: "https://francc7.sg-host.com/project-9",
+          project: "DESTINATIONS SUMMER 2024",
+          client: "HARVEY NICHOLS",
+          productServices: "8AM MANAGEMENT",
+          num: "9 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+          url: "https://francc7.sg-host.com/project-1",
+          project: "STREET SPRING CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "1 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-8-1.png",
+          url: "https://francc7.sg-host.com/project-2",
+          project: "ARTRAPE RÊVES 2024",
+          client: "LOUIS VUITTON",
+          productServices: "HOLIDAYS PRODUCTION",
+          num: "2 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+          url: "https://francc7.sg-host.com/project-3",
+          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "3 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-10.png",
+          url: "https://francc7.sg-host.com/project-4",
+          project: "COR",
+          client: "",
+          productServices: "LA BELLE FAÇON",
+          num: "4 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+          url: "https://francc7.sg-host.com/project-5",
+          project: "SUMMER CAMPAING 2024",
+          client: "SHOPBOB",
+          productServices: "NORTH SIX",
+          num: "5 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+          url: "https://francc7.sg-host.com/project-6",
+          project: "ZARA MAN X CASA JOSEPHINE",
+          client: "ZARA",
+          productServices: "NORTH SIX",
+          num: "6 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+          url: "https://francc7.sg-host.com/project-7",
+          project: "CORE SPRING CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "7 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+          url: "https://francc7.sg-host.com/project-8",
+          project: "DESIGNER SPRING CAMPAING 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "8 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+          url: "https://francc7.sg-host.com/project-9",
+          project: "DESTINATIONS SUMMER 2024",
+          client: "HARVEY NICHOLS",
+          productServices: "8AM MANAGEMENT",
+          num: "9 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+          url: "https://francc7.sg-host.com/project-1",
+          project: "STREET SPRING CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "1 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-8-1.png",
+          url: "https://francc7.sg-host.com/project-2",
+          project: "ARTRAPE RÊVES 2024",
+          client: "LOUIS VUITTON",
+          productServices: "HOLIDAYS PRODUCTION",
+          num: "2 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+          url: "https://francc7.sg-host.com/project-3",
+          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "3 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-10.png",
+          url: "https://francc7.sg-host.com/project-4",
+          project: "COR",
+          client: "",
+          productServices: "LA BELLE FAÇON",
+          num: "4 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+          url: "https://francc7.sg-host.com/project-5",
+          project: "SUMMER CAMPAING 2024",
+          client: "SHOPBOB",
+          productServices: "NORTH SIX",
+          num: "5 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+          url: "https://francc7.sg-host.com/project-6",
+          project: "ZARA MAN X CASA JOSEPHINE",
+          client: "ZARA",
+          productServices: "NORTH SIX",
+          num: "6 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+          url: "https://francc7.sg-host.com/project-7",
+          project: "CORE SPRING CAMPAIGN 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "7 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+          url: "https://francc7.sg-host.com/project-8",
+          project: "DESIGNER SPRING CAMPAING 2024",
+          client: "ZALANDO",
+          productServices: "RAYO PRODUCTIONS",
+          num: "8 /09",
+        },
+        {
+          image:
+            "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+          url: "https://francc7.sg-host.com/project-9",
+          project: "DESTINATIONS SUMMER 2024",
+          client: "HARVEY NICHOLS",
+          productServices: "8AM MANAGEMENT",
+          num: "9 /09",
         },
       ];
 
@@ -243,15 +508,7 @@
       }
 
       function updateCaption(project, index) {
-        captionContainer.innerHTML = `${
-          project.project
-        } <span class="with-section">WITH</span> ${
-          project.client
-        } <span class="services-section">X</span> ${
-          project.productServices
-        } <span class="index-section">${formatIndex(index + 1)} / ${formatIndex(
-          projects.length
-        )}</span>`;
+        captionContainer.innerHTML = `${project.project} <span class="with-section">WITH</span> ${project.client} <span class="services-section">X</span> ${project.productServices} <span class="index-section">${project.num}</span>`;
       }
 
       function updateCarousel() {
@@ -284,10 +541,38 @@
         updateCaption(projects[projectIndex], projectIndex);
       }
 
-      function moveCarousel() {
+      function moveCarouselUp() {
         const items = document.querySelectorAll(".carousel-item");
         carousel.style.transition = "transform var(--transition-duration) ease";
         currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
+
+        if (currentIndex === items.length - 1) {
+          setTimeout(() => {
+            carousel.style.transition = "none";
+            currentIndex = 1;
+            updateCarousel();
+            setTimeout(() => {
+              carousel.style.transition =
+                "transform var(--transition-duration) ease";
+            }, 50);
+          }, 500);
+        } else if (currentIndex === 0) {
+          setTimeout(() => {
+            carousel.style.transition = "none";
+            currentIndex = items.length - 2;
+            updateCarousel();
+            setTimeout(() => {
+              carousel.style.transition =
+                "transform var(--transition-duration) ease";
+            }, 50);
+          }, 500);
+        }
+      }
+      function moveCarousel() {
+        const items = document.querySelectorAll(".carousel-item");
+        carousel.style.transition = "transform var(--transition-duration) ease";
+        currentIndex = (currentIndex - 1) % items.length;
         updateCarousel();
 
         if (currentIndex === items.length - 1) {
@@ -327,8 +612,6 @@
         clearInterval(intervalId);
       }
 
-     
-
       document.addEventListener("DOMContentLoaded", () => {
         updateCarousel();
         startCarousel(); // Iniciamos el carrusel al cargar la página
@@ -351,13 +634,22 @@
           });
         });
 
-          const bodyElement = document.body;
+        const bodyElement = document.body;
 
-          bodyElement.addEventListener("click", (event) => {
-            if (isHovering === false) {
+        bodyElement.addEventListener("click", (event) => {
+          if (isHovering === false) {
             moveCarousel();
           }
-          });
+        });
+        bodyElement.addEventListener("wheel", (event) => {
+          if (event.deltaY > 0) {
+            // Aquí puedes agregar tu lógica para desplazarse hacia arriba
+            moveCarouselUp();
+          } else {
+            // Aquí puedes agregar tu lógica para desplazarse hacia abajo
+            moveCarousel();
+          }
+        });
       });
     </script>
   </body>
