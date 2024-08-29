@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Carousel</title>
+    <style>
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            gap: 120px; /* Ajuste del espacio entre los elementos */
+            transition: transform 0.5s ease;
+            will-change: transform;
+        }
+
+        .carousel-item {
+            flex: 0 0 auto;
+            width: 100%;
+            max-width: 300px; /* Ajusta este valor según lo necesites */
+            height: 163px; /* Altura fija para cada item */
+            background-color: #ddd;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel" id="carousel">
+            <!-- Los items del carrusel serán generados dinámicamente con JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const carouselData = [
+            { image: 'https://via.placeholder.com/300x163.png?text=Item+1', url: 'https://example.com/1' },
+            { image: 'https://via.placeholder.com/300x163.png?text=Item+2', url: 'https://example.com/2' },
+            { image: 'https://via.placeholder.com/300x163.png?text=Item+3', url: 'https://example.com/3' },
+            { image: 'https://via.placeholder.com/300x163.png?text=Item+4', url: 'https://example.com/4' },
+            { image: 'https://via.placeholder.com/300x163.png?text=Item+5', url: 'https://example.com/5' },
+        ];
+
+        // Función para construir el carrusel dinámicamente
+        function buildCarousel(data) {
+            const carousel = document.getElementById('carousel');
+            
+            // Duplicar los items para crear el efecto de desplazamiento infinito
+            const dataToRender = [...data, ...data];
+            
+            dataToRender.forEach(item => {
+                const carouselItem = document.createElement('div');
+                carouselItem.classList.add('carousel-item');
+                
+                const img = document.createElement('img');
+                img.src = item.image;
+                img.alt = 'Carousel item';
+                img.onclick = () => window.location.href = item.url; // Redirige a la URL al hacer clic
+                
+                carouselItem.appendChild(img);
+                carousel.appendChild(carouselItem);
+            });
+        }
+
+        // Llamada a la función para construir el carrusel
+        buildCarousel(carouselData);
+
+        let currentIndex = 0;
+        const items = document.querySelectorAll('.carousel-item');
+        const totalItems = items.length;
+
+        function moveCarousel() {
+            const carousel = document.querySelector('.carousel');
+            currentIndex++;
+            if (currentIndex >= totalItems / 2) {
+                currentIndex = 0;
+                carousel.style.transition = 'none';
+                carousel.style.transform = 'translateX(0)';
+                setTimeout(() => {
+                    carousel.style.transition = 'transform 0.5s ease';
+                    moveCarousel();
+                }, 50);
+            } else {
+                const translateX = -(currentIndex * (items[0].offsetWidth + parseInt(getComputedStyle(carousel).gap)));
+                carousel.style.transform = `translateX(${translateX}px)`;
+            }
+        }
+
+        setInterval(moveCarousel, 3000); // Mueve el carrusel cada 3 segundos
+    </script>
+</body>
+</html>
