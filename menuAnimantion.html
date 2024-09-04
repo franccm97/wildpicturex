@@ -29,27 +29,11 @@
             border: 1px solid #ccc;
             display: flex;
             justify-content: center;
-            align-items: center;
-        }
-
-        .pop-up {
-            display: none; /* Oculto inicialmente */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            z-index: 1000;
+            align-items: flex-start;
+            padding-top: 20px;
         }
 
         .menu-activador {
-            position: absolute;
-            top: 20px;
-            right: 20px;
             width: 30px;
             height: 20px;
             display: flex;
@@ -57,6 +41,7 @@
             flex-direction: column;
             cursor: pointer;
             z-index: 1100;
+            transition: transform 0.3s ease;
         }
 
         .menu-activador-linea {
@@ -78,6 +63,33 @@
             transform: translateY(-9px) rotate(-45deg);
         }
 
+        .pop-up {
+            display: none; /* Oculto inicialmente */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            visibility: hidden; /* Oculta el contenido al principio */
+        }
+
+        #menuActivadorInPopup {
+            display: none; /* Oculto inicialmente */
+        }
+
+        .pop-up.show {
+            visibility: visible; /* Muestra el contenido del pop-up cuando esté visible */
+        }
+
         .pop-up a {
             display: block;
             margin-bottom: 10px;
@@ -93,6 +105,7 @@
 
         .input-pop-up {
             display: flex;
+            margin-top: 10px;
         }
 
         .input-pop-up input {
@@ -129,6 +142,11 @@
         </div>
 
         <div class="pop-up" id="popup">
+            <div class="menu-activador open" id="menuActivadorInPopup">
+                <div class="menu-activador-linea"></div>
+                <div class="menu-activador-linea"></div>
+                <div class="menu-activador-linea"></div>
+            </div>
             <a href="">ABOUT</a>
             <a href="mailto:info@wildpictures.xyz">CONTACT</a>
             <p>Subscribe to our newsletter:</p>
@@ -143,15 +161,28 @@
         document.addEventListener("DOMContentLoaded", function() {
             const menuActivador = document.getElementById('menuActivador');
             const popup = document.getElementById('popup');
+            const menuActivadorInPopup = document.getElementById('menuActivadorInPopup');
 
-            // Mostrar/ocultar el pop-up y animar el menú activador
+            // Mostrar el pop-up después de la animación del menú activador
             menuActivador.addEventListener('click', function() {
-                menuActivador.classList.toggle('open');
-                if (popup.style.display === 'block') {
-                    popup.style.display = 'none';
-                } else {
-                    popup.style.display = 'block';
-                }
+                menuActivador.classList.add('open');
+                setTimeout(function() {
+                    popup.style.display = 'flex';
+                    popup.classList.add('show'); // Mostrar contenido del pop-up
+                    menuActivador.style.display = 'none';
+                    menuActivadorInPopup.style.display = 'flex'; // Mostrar la "X" dentro del pop-up
+                }, 300); // Esperar a que termine la animación antes de mostrar el pop-up
+            });
+
+            // Cerrar el pop-up al hacer clic en el menú activador dentro del pop-up
+            menuActivadorInPopup.addEventListener('click', function() {
+                popup.style.display = 'none';
+                popup.classList.remove('show'); // Ocultar contenido del pop-up
+                menuActivadorInPopup.style.display = 'none'; // Ocultar la "X"
+                menuActivador.style.display = 'flex';
+                setTimeout(function() {
+                    menuActivador.classList.remove('open');
+                }, 10); // Agrega un pequeño retraso para que se vea la transición de vuelta a hamburguesa
             });
         });
     </script>
