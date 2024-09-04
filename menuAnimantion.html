@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,26 +12,30 @@
             box-sizing: border-box;
         }
 
-        body, html {
-            height: 100%;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0f0f0;
+        body {
+            font-family: 'Inter', sans-serif;
         }
 
-        .container {
-            width: 900px;
-            height: 900px;
-            position: relative;
-            overflow: hidden;
-            background-color: #fff;
-            border: 1px solid #ccc;
+        /* Header con padding de 20px */
+        .header {
+            width: 100%;
+            padding: 20px;
+            background-color: blue;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 20px;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Logo responsive */
+        .logo {
+            margin-top: 20px; /* Añadir separación de 20px debajo del menú */
+        }
+
+        .logo img {
+            max-width: 100%;
+            height: auto;
+            width: auto;
         }
 
         .menu-activador {
@@ -47,7 +52,7 @@
         .menu-activador-linea {
             width: 100%;
             height: 2px;
-            background-color: #000;
+            background-color: #fff; /* Cambiar color a blanco */
             transition: all 0.3s;
         }
 
@@ -63,8 +68,13 @@
             transform: translateY(-9px) rotate(-45deg);
         }
 
+        .menu-activador.open .menu-activador-linea {
+            background-color: #000;
+            /* Cambiar color a negro al convertirse en cruz */
+        }
+
         .pop-up {
-            display: none; /* Oculto inicialmente */
+            display: none;
             position: absolute;
             top: 0;
             left: 0;
@@ -73,39 +83,41 @@
             background-color: #fff;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
             z-index: 1000;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            visibility: hidden; /* Oculta el contenido al principio */
+            visibility: hidden;
         }
 
         #menuActivadorInPopup {
-            display: none; /* Oculto inicialmente */
+            display: none;
         }
 
         .pop-up.show {
-            visibility: visible; /* Muestra el contenido del pop-up cuando esté visible */
+            visibility: visible;
         }
 
         .pop-up a {
-            display: block;
-            margin-bottom: 10px;
+            font-family: Inter, sans-serif;
+            font-size: 13px;
             color: #000;
             text-decoration: none;
             font-weight: 500;
         }
 
         .pop-up p {
-            margin: 0 0 10px;
-            font-size: 14px;
+            font-family: Inter, sans-serif;
+            font-size: 13px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
         }
 
         .input-pop-up {
             display: flex;
-            margin-top: 10px;
         }
 
         .input-pop-up input {
@@ -131,24 +143,68 @@
         .input-pop-up button:hover {
             background-color: #333;
         }
+
+        /* Media queries para dispositivos móviles */
+        @media only screen and (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+
+            .pop-up {
+                padding: 20px;
+            }
+
+            .input-pop-up input,
+            .input-pop-up button {
+                font-size: 13px;
+            }
+
+            /* Escalar el logo según el tamaño de la pantalla */
+            .logo img {
+                max-height: 8vh;
+            }
+        }
+
+        /* Solo mostrar en pantallas móviles */
+        @media only screen and (min-width: 600px) {
+            .container {
+                display: none;
+            }
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            row-gap: 40px;
+            align-items: center;
+        }
     </style>
 </head>
+
 <body>
-    <div class="container">
+    <div class="header">
         <div class="menu-activador" id="menuActivador">
             <div class="menu-activador-linea"></div>
             <div class="menu-activador-linea"></div>
             <div class="menu-activador-linea"></div>
         </div>
+        <div class="logo">
+            <img src="https://francc7.sg-host.com/wp-content/uploads/2024/09/LogoSVGmobile.svg" alt="Logo">
+        </div>
+    </div>
 
-        <div class="pop-up" id="popup">
-            <div class="menu-activador open" id="menuActivadorInPopup">
-                <div class="menu-activador-linea"></div>
-                <div class="menu-activador-linea"></div>
-                <div class="menu-activador-linea"></div>
-            </div>
-            <a href="">ABOUT</a>
+    <div class="pop-up" id="popup">
+        <div class="menu-activador open" id="menuActivadorInPopup">
+            <div class="menu-activador-linea"></div>
+            <div class="menu-activador-linea"></div>
+            <div class="menu-activador-linea"></div>
+        </div>
+        <div class="links">
+            <a href="#">ABOUT</a>
             <a href="mailto:info@wildpictures.xyz">CONTACT</a>
+        </div>
+
+        <div class="form">
             <p>Subscribe to our newsletter:</p>
             <div class="input-pop-up">
                 <input type="text" placeholder="Sign Up">
@@ -158,33 +214,34 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const menuActivador = document.getElementById('menuActivador');
             const popup = document.getElementById('popup');
             const menuActivadorInPopup = document.getElementById('menuActivadorInPopup');
 
             // Mostrar el pop-up después de la animación del menú activador
-            menuActivador.addEventListener('click', function() {
+            menuActivador.addEventListener('click', function () {
                 menuActivador.classList.add('open');
-                setTimeout(function() {
+                setTimeout(function () {
                     popup.style.display = 'flex';
-                    popup.classList.add('show'); // Mostrar contenido del pop-up
+                    popup.classList.add('show');
                     menuActivador.style.display = 'none';
-                    menuActivadorInPopup.style.display = 'flex'; // Mostrar la "X" dentro del pop-up
-                }, 300); // Esperar a que termine la animación antes de mostrar el pop-up
+                    menuActivadorInPopup.style.display = 'flex';
+                }, 300);
             });
 
             // Cerrar el pop-up al hacer clic en el menú activador dentro del pop-up
-            menuActivadorInPopup.addEventListener('click', function() {
+            menuActivadorInPopup.addEventListener('click', function () {
                 popup.style.display = 'none';
-                popup.classList.remove('show'); // Ocultar contenido del pop-up
-                menuActivadorInPopup.style.display = 'none'; // Ocultar la "X"
+                popup.classList.remove('show');
+                menuActivadorInPopup.style.display = 'none';
                 menuActivador.style.display = 'flex';
-                setTimeout(function() {
+                setTimeout(function () {
                     menuActivador.classList.remove('open');
-                }, 10); // Agrega un pequeño retraso para que se vea la transición de vuelta a hamburguesa
+                }, 10);
             });
         });
     </script>
 </body>
+
 </html>
