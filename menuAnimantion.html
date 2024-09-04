@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 900px;
+            height: 900px;
+            position: relative;
+            overflow: hidden;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pop-up {
+            display: none; /* Oculto inicialmente */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 1000;
+        }
+
+        .menu-activador {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .menu-activador-linea {
+            width: 100%;
+            height: 2px;
+            background-color: #000;
+            transition: all 0.3s;
+        }
+
+        .menu-activador.open .menu-activador-linea:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-activador.open .menu-activador-linea:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-activador.open .menu-activador-linea:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .pop-up a {
+            display: block;
+            margin-bottom: 10px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .pop-up p {
+            margin: 0 0 10px;
+            font-size: 14px;
+        }
+
+        .input-pop-up {
+            display: flex;
+        }
+
+        .input-pop-up input {
+            flex: 1;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .input-pop-up button {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-left: none;
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .input-pop-up button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="menu-activador" id="menuActivador">
+            <div class="menu-activador-linea"></div>
+            <div class="menu-activador-linea"></div>
+            <div class="menu-activador-linea"></div>
+        </div>
+
+        <div class="pop-up" id="popup">
+            <a href="">ABOUT</a>
+            <a href="mailto:info@wildpictures.xyz">CONTACT</a>
+            <p>Subscribe to our newsletter:</p>
+            <div class="input-pop-up">
+                <input type="text" placeholder="Sign Up">
+                <button>SUBMIT</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuActivador = document.getElementById('menuActivador');
+            const popup = document.getElementById('popup');
+
+            // Mostrar/ocultar el pop-up y animar el menú activador
+            menuActivador.addEventListener('click', function() {
+                menuActivador.classList.toggle('open');
+                if (popup.style.display === 'block') {
+                    popup.style.display = 'none';
+                } else {
+                    popup.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
