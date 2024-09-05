@@ -32,11 +32,11 @@
             top: 0;
             left: 0;
             opacity: 0;
-            transition: 0.25s ease-in-out; /* Efecto de desvanecimiento */
+             transition: 0.2s ease-in-out;
             background-size: cover; /* Hace que la imagen cubra toda la pantalla */
+           
             background-position: center; /* Centra la imagen */
             background-repeat: no-repeat; /* No repite la imagen */
-          background-position:top top
         }
         .slide.active {
             opacity: 1;
@@ -48,8 +48,8 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10; /* Asegura que esté por encima de las imágenes */
-            width: 100%; /* Ajusta el tamaño del SVG según lo que necesites */
-            height: 75vh;
+            width: 200px; /* Ajusta el tamaño del SVG según lo que necesites */
+            height: 200px;
         }
 
         /* Ajustes de tamaño de imagen */
@@ -84,7 +84,7 @@
             slides[currentSlide].classList.add('active');
         }
 
-        setInterval(showNextSlide, 800); // Cambia de imagen cada 1 segundo
+        setInterval(showNextSlide, 1000); // Cambia de imagen cada 1 segundo
     </script>
 
 </body>
