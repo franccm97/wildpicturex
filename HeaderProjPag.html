@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Header Project Page</title>
+  </head>
+  <style>
+    body {
+      background-color: white;
+      height: 10000px;
+      width: 100%;
+    }
+
+    /* For desktop view */
+    .header-desktop {
+      visibility: visible;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      mix-blend-mode: difference;
+      position: sticky;
+      top: 0;
+    }
+
+    .links {
+      display: flex;
+      justify-content: space-between; /* Space between the links */
+      align-items: center; /* Center vertically within this container */
+      margin: 1.375rem;
+      z-index: 30;
+    }
+
+    /*this style for <a> I must put it to CLOSE style*/
+      .about-contact {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 35;
+      }
+      .about-contact a {
+        color: white; /* Inherit color from parent, or set a specific color */
+        font-size: inherit; /* Inherit font size from parent, or set a specific size */
+        font-family: inherit; /* Inherit font family from parent, or set a specific family */
+        margin: 0 10px; /* Horizontal space between links */
+        padding: 0; /* Remove any default padding */
+        margin: 0 10px; /* Add horizontal space between links */
+        text-decoration: none; /* Remove underline from links */
+        /* Change text color if needed */
+        font-size: 16px; /* Adjust font size if needed */
+        z-index: 80;
+    
+   
+       
+      }
+      .close a{
+        text-decoration: none; /* Remove underline from links */
+        color: white; /* Inherit color from parent, or set a specific color */
+        font-size: inherit; /* Inherit font size from parent, or set a specific size */
+        font-family: inherit; /* Inherit font family from parent, or set a specific family */
+        z-index: 90;
+
+      }
+
+    .logo {
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      margin-bottom: 20px; /* Add space between logo and links */
+    }
+
+    .logo img {
+      max-width: 100%; /* Ensure logo scales properly */
+      height: auto;
+    }
+    .div-header-mobile {
+      visibility: hidden;
+      width: 100%;
+      padding: 20px;
+      background-color: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      display: none;
+    }
+
+    /*mobileeeeeeeee*/
+    @media only screen and (max-width: 600px) {
+      .header-desktop {
+        visibility: hidden;
+        display: none;
+      }
+      .div-header-mobile {
+        visibility: visible;
+        display: flex;
+      }
+      .header-mobile {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Center vertically */
+        align-items: center; /* Center horizontally */ /* Take the full height of the viewport */
+        mix-blend-mode: difference;
+      }
+      .pop-up {
+        padding: 20px;
+      }
+
+      .input-pop-up input,
+      .input-pop-up button {
+        font-size: 13px;
+      }
+
+      /* Escalar el logo según el tamaño de la pantalla */
+      .logo img {
+        max-height: 8vh;
+      }
+
+      .links {
+        display: flex;
+        flex-direction: column;
+        row-gap: 40px;
+        align-items: center;
+        color: black;
+      }
+
+      /* Logo responsive */
+      .logo {
+        margin-top: 20px; /* Añadir separación de 20px debajo del menú */
+        position: absolute;
+        padding: 20px;
+        text-align: center;
+        /* left: 50%;
+        transform: translateX(-50%); */
+      }
+
+      .logo img {
+        max-width: 100%;
+        margin-top: 20px;
+        height: auto;
+        width: auto;
+      }
+
+      .menu-activador {
+        width: 30px;
+        height: 20px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        cursor: pointer;
+        z-index: 1100;
+        transition: transform 0.3s ease;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .menu-activador-linea {
+        width: 100%;
+        height: 2px;
+        background-color: #fff; /* Cambiar color a blanco */
+        transition: all 0.3s;
+      }
+
+      .menu-activador.open .menu-activador-linea:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+      }
+
+      .menu-activador.open .menu-activador-linea:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-activador.open .menu-activador-linea:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+
+      .menu-activador.open .menu-activador-linea {
+        background-color: #000;
+        /* Cambiar color a negro al convertirse en cruz */
+      }
+
+      .pop-up {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        visibility: hidden;
+      }
+
+      #menuActivadorInPopup {
+        display: none;
+      }
+
+      .pop-up.show {
+        visibility: visible;
+      }
+
+      .pop-up a {
+        font-family: Inter, sans-serif;
+        font-size: 13px;
+        color: #000;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .pop-up p {
+        font-family: Inter, sans-serif;
+        font-size: 13px;
+        color: #000;
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+
+      .input-pop-up {
+        display: flex;
+      }
+
+      .input-pop-up input {
+        flex: 1;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px 0 0 4px;
+        outline: none;
+      }
+
+      .input-pop-up button {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-left: none;
+        background-color: #000;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 0 4px 4px 0;
+      }
+
+      .input-pop-up button:hover {
+        background-color: #333;
+      }
+    }
+  </style>
+  <body>
+    <div class="header-desktop">
+      <div class="links">
+        <div class="about-contact">
+          <a href="">ABOUT</a>
+          <a href="">CONTACT</a>
+        </div>
+        <div class="close">
+          <a href="">CLOSE</a>
+        </div>
+      </div>
+      <div class="logo">
+        <img
+          src="https://francc7.sg-host.com/wp-content/uploads/2024/08/Logo-Desktop-2.png"
+          alt="Imagen Logo"
+        />
+      </div>
+    </div>
+    <div class="div-header-mobile">
+      <div class="parent-container">
+        <div class="header-mobile">
+          <div class="menu-activador" id="menuActivador">
+            <div class="menu-activador-linea"></div>
+            <div class="menu-activador-linea"></div>
+            <div class="menu-activador-linea"></div>
+          </div>
+          <div class="logo">
+            <img
+              src="https://francc7.sg-host.com/wp-content/uploads/2024/09/LogoSVGmobile.svg"
+              alt="Logo"
+            />
+          </div>
+        </div>
+
+        <div class="pop-up" id="popup">
+          <div class="menu-activador open" id="menuActivadorInPopup">
+            <div class="menu-activador-linea"></div>
+            <div class="menu-activador-linea"></div>
+            <div class="menu-activador-linea"></div>
+          </div>
+          <div class="links">
+            <a href="#">ABOUT</a>
+            <a href="mailto:info@wildpictures.xyz">CONTACT</a>
+          </div>
+
+          <div class="form">
+            <p>Subscribe to our newsletter:</p>
+            <div class="input-pop-up">
+              <input type="text" placeholder="Sign Up" />
+              <button>SUBMIT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuActivador = document.getElementById("menuActivador");
+      const popup = document.getElementById("popup");
+      const menuActivadorInPopup = document.getElementById(
+        "menuActivadorInPopup"
+      );
+
+      // Mostrar el pop-up después de la animación del menú activador
+      menuActivador.addEventListener("click", function () {
+        menuActivador.classList.add("open");
+        setTimeout(function () {
+          popup.style.display = "flex";
+          popup.classList.add("show");
+          menuActivador.style.display = "none";
+          menuActivadorInPopup.style.display = "flex";
+        }, 300);
+      });
+
+      // Cerrar el pop-up al hacer clic en el menú activador dentro del pop-up
+      menuActivadorInPopup.addEventListener("click", function () {
+        popup.style.display = "none";
+        popup.classList.remove("show");
+        menuActivadorInPopup.style.display = "none";
+        menuActivador.style.display = "flex";
+        setTimeout(function () {
+          menuActivador.classList.remove("open");
+        }, 10);
+      });
+    });
+  </script>
+</html>
