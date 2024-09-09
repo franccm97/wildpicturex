@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Carousel</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+        /* Estilos para el carousel de escritorio */
+        :root {
+            --active-height: 70vh;
+            --inactive-height: 20vh;
+            --transition-duration: 0.5s; /* Animación más suave */
+        }
+
+        .carousel-container-desktop {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-desktop {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform var(--transition-duration) ease;
+            overflow: hidden;
+        }
+
+        .carousel-item-desktop {
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            height: var(--inactive-height);
+            width: 100%;
+            margin: 10px 0;
+            transition: height var(--transition-duration), filter var(--transition-duration);
+            overflow: hidden;
+        }
+
+        .carousel-item-desktop img {
+            height: 100%;
+            width: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            object-fit: contain;
+        }
+
+        .carousel-item-desktop.active {
+            height: var(--active-height);
+            width: 100%;
+            object-fit: cover !important;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .carousel-item-desktop.inactive {
+            width: 25vw;
+        }
+
+        .carousel-item-desktop.active:hover img,
+        .carousel-item-desktop.active:hover video {
+            filter: blur(2px);
+        }
+
+        .hidden-desktop {
+            display: none;
+        }
+
+        .overlay-desktop {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            mix-blend-mode: difference;
+        }
+
+        .logo-container-desktop {
+            padding-left: 20px;
+        }
+
+        .logo-container-desktop img {
+            width: 100%;
+            height: 60px;
+        }
+
+        .caption-container-desktop {
+            font-size: 14px;
+            font-weight: 400;
+            white-space: nowrap;
+            padding-right: 20px !important;
+            color: white;
+            margin-top: 20px; /* Agregado margen superior */
+            margin-left: 20px; /* Agregado margen izquierdo */
+        }
+
+        .caption-container-desktop .with-section,
+        .caption-container-desktop .services-section,
+        .caption-container-desktop .index-section {
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+        }
+
+        /* Estilos para el carousel móvil */
+        .carousel-container-mobile {
+            display: none;
+            position: relative;
+            height: 100vh;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+        }
+
+        .carousel-item-mobile {
+            width: 100%;
+            height: 94vh;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-item-content-mobile {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px 20px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .carousel-item-title-mobile {
+            flex: 1;
+            text-align: left;
+        }
+
+        .carousel-item-index-mobile {
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        .carousel-item-bottom-mobile {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: white;
+        }
+
+        .carousel-item-bottom-mobile .section-mobile {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        .carousel-item-client-mobile,
+        .carousel-item-product-services-mobile {
+            text-transform: uppercase;
+        }
+
+        /* Media Queries */
+        @media only screen and (max-width: 600px) {
+            .carousel-container-desktop {
+                display: none;
+            }
+
+            .carousel-container-mobile {
+                display: block;
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+            .carousel-container-mobile {
+                display: none;
+            }
+        }
+
+        /*Tablet*/
+        @media only screen and (min-width: 600px) and (max-width: 1023px) {
+    .carousel-container-desktop {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .carousel-desktop {
+        display: flex;
+        flex-direction: column; /* Vertical direction */
+        overflow: hidden;
+        width: auto;
+        height: 100vh; /* Full viewport height */
+    }
+
+    .carousel-item-desktop {
+        width: var(--inactive-width); /* Set width for inactive items */
+        transition: height var(--transition-duration), transform var(--transition-duration), filter var(--transition-duration);
+    }
+
+    .carousel-item-desktop.small {
+        flex: 0 0 10%; /* Smaller inactive items */
+        height: var(--small-height); /* Smaller height */
+    }
+
+    .carousel-item-desktop.medium {
+        flex: 0 0 20%; /* Slightly bigger inactive items */
+        height: var(--medium-height); /* Medium height */
+    }
+
+    .carousel-item-desktop.active {
+        flex: 0 0 40%; /* The active item takes up 40% of the height */
+        height: var(--active-height);
+        width: var(--active-width); /* Adjust width for active items if needed */
+    }
+
+    .carousel-item-desktop.inactive {
+        filter: brightness(0.5);
+        transition: filter var(--transition-duration);
+    }
+
+    .carousel-desktop {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .carousel-desktop > .carousel-item-desktop {
+        transition: transform var(--transition-duration);
+    }
+    .overlay-desktop {
+            position: absolute;
+            display: flex;
+            /* top: 50%;
+            left: 50%;
+            width: 100%; */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* transform: translate(-50%, -50%); */
+            z-index: 2;
+            mix-blend-mode: difference;
+        }
+        .caption-container-desktop{
+            display: flex;
+            font-size: 0.8rem;
+            font-weight: 200;
+            white-space: nowrap;
+            padding-right: 20px !important;
+            color: white;
+            margin-top: 12px; /* Agregado margen superior */
+            margin-left: 12px; /* Agregado margen izquierdo */
+        }
+        .with-section{
+            display: none;
+        }
+        .logo-container-desktop img {
+            width: 65%;
+            height: 60px;
+        }
+        #caption-desktop{
+            width: 60%;
+        }
+
+
+
+}
+ 
+    </style>
+</head>
+
+<body>
+    <!-- Carousel de escritorio/tablet -->
+    <div class="carousel-container-desktop">
+        <div class="overlay-desktop">
+            <div class="logo-container-desktop">
+                <img src="https://francc7.sg-host.com/wp-content/uploads/2024/06/Capa_1.svg" alt="Logo" />
+            </div>
+            <div id="caption-desktop" class="caption-container-desktop"></div>
+        </div>
+        <div id="carousel-desktop" class="carousel-desktop">
+            <!-- Items serán inyectados aquí por JavaScript -->
+        </div>  
+    </div>
+
+    <!-- Carousel móvil -->
+    <div class="carousel-container-mobile" id="carousel-mobile">
+        <!-- Los elementos del carousel se generarán dinámicamente con JavaScript -->
+    </div>
+
+    <script>
+        // Código JavaScript para el carousel de escritorio/tablet
+        const projectsDesktop = [
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+                url: "https://francc7.sg-host.com/project-1",
+                project: "STREET SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "01/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-2",
+                project: "ARTRAPE RÊVES 2024",
+                client: "LOUIS VUITTON",
+                productServices: "HOLIDAYS PRODUCTION",
+                num: "02/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+                url: "https://francc7.sg-host.com/project-3",
+                project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "03/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-4",
+                project: "COR",
+                client: "",
+                productServices: "LA BELLE FAÇON",
+                num: "04/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+                url: "https://francc7.sg-host.com/project-5",
+                project: "SUMMER CAMPAING 2024",
+                client: "SHOPBOB",
+                productServices: "NORTH SIX",
+                num: "05/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+                url: "https://francc7.sg-host.com/project-6",
+                project: "ZARA MAN X CASA JOSEPHINE",
+                client: "ZARA",
+                productServices: "NORTH SIX",
+                num: "06/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+                url: "https://francc7.sg-host.com/project-7",
+                project: "CORE SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "07/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+                url: "https://francc7.sg-host.com/project-8",
+                project: "DESIGNER SPRING CAMPAING 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "08/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+                url: "https://francc7.sg-host.com/project-9",
+                project: "DESTINATIONS SUMMER 2024",
+                client: "HARVEY NICHOLS",
+                productServices: "8AM MANAGEMENT",
+                num: "09/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+                url: "https://francc7.sg-host.com/project-1",
+                project: "STREET SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "01/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-2",
+                project: "ARTRAPE RÊVES 2024",
+                client: "LOUIS VUITTON",
+                productServices: "HOLIDAYS PRODUCTION",
+                num: "02/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+                url: "https://francc7.sg-host.com/project-3",
+                project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "03/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-4",
+                project: "COR",
+                client: "",
+                productServices: "LA BELLE FAÇON",
+                num: "04/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+                url: "https://francc7.sg-host.com/project-5",
+                project: "SUMMER CAMPAING 2024",
+                client: "SHOPBOB",
+                productServices: "NORTH SIX",
+                num: "05/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+                url: "https://francc7.sg-host.com/project-6",
+                project: "ZARA MAN X CASA JOSEPHINE",
+                client: "ZARA",
+                productServices: "NORTH SIX",
+                num: "06/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+                url: "https://francc7.sg-host.com/project-7",
+                project: "CORE SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "07/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+                url: "https://francc7.sg-host.com/project-8",
+                project: "DESIGNER SPRING CAMPAING 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "08/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+                url: "https://francc7.sg-host.com/project-9",
+                project: "DESTINATIONS SUMMER 2024",
+                client: "HARVEY NICHOLS",
+                productServices: "8AM MANAGEMENT",
+                num: "09/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+                url: "https://francc7.sg-host.com/project-1",
+                project: "STREET SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "01/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-2",
+                project: "ARTRAPE RÊVES 2024",
+                client: "LOUIS VUITTON",
+                productServices: "HOLIDAYS PRODUCTION",
+                num: "02/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+                url: "https://francc7.sg-host.com/project-3",
+                project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "03/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-4",
+                project: "COR",
+                client: "",
+                productServices: "LA BELLE FAÇON",
+                num: "04/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+                url: "https://francc7.sg-host.com/project-5",
+                project: "SUMMER CAMPAING 2024",
+                client: "SHOPBOB",
+                productServices: "NORTH SIX",
+                num: "05/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+                url: "https://francc7.sg-host.com/project-6",
+                project: "ZARA MAN X CASA JOSEPHINE",
+                client: "ZARA",
+                productServices: "NORTH SIX",
+                num: "06/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+                url: "https://francc7.sg-host.com/project-7",
+                project: "CORE SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "07/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+                url: "https://francc7.sg-host.com/project-8",
+                project: "DESIGNER SPRING CAMPAING 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "08/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+                url: "https://francc7.sg-host.com/project-9",
+                project: "DESTINATIONS SUMMER 2024",
+                client: "HARVEY NICHOLS",
+                productServices: "8AM MANAGEMENT",
+                num: "09/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+                url: "https://francc7.sg-host.com/project-1",
+                project: "STREET SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "01/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-2",
+                project: "ARTRAPE RÊVES 2024",
+                client: "LOUIS VUITTON",
+                productServices: "HOLIDAYS PRODUCTION",
+                num: "02/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+                url: "https://francc7.sg-host.com/project-3",
+                project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "03/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-4",
+                project: "COR",
+                client: "",
+                productServices: "LA BELLE FAÇON",
+                num: "04/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+                url: "https://francc7.sg-host.com/project-5",
+                project: "SUMMER CAMPAING 2024",
+                client: "SHOPBOB",
+                productServices: "NORTH SIX",
+                num: "05/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+                url: "https://francc7.sg-host.com/project-6",
+                project: "ZARA MAN X CASA JOSEPHINE",
+                client: "ZARA",
+                productServices: "NORTH SIX",
+                num: "06/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+                url: "https://francc7.sg-host.com/project-7",
+                project: "CORE SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "07/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+                url: "https://francc7.sg-host.com/project-8",
+                project: "DESIGNER SPRING CAMPAING 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "08/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+                url: "https://francc7.sg-host.com/project-9",
+                project: "DESTINATIONS SUMMER 2024",
+                client: "HARVEY NICHOLS",
+                productServices: "8AM MANAGEMENT",
+                num: "09/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+                url: "https://francc7.sg-host.com/project-1",
+                project: "STREET SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "01/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-2",
+                project: "ARTRAPE RÊVES 2024",
+                client: "LOUIS VUITTON",
+                productServices: "HOLIDAYS PRODUCTION",
+                num: "02/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+                url: "https://francc7.sg-host.com/project-3",
+                project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "03/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-4",
+                project: "COR",
+                client: "",
+                productServices: "LA BELLE FAÇON",
+                num: "04/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+                url: "https://francc7.sg-host.com/project-5",
+                project: "SUMMER CAMPAING 2024",
+                client: "SHOPBOB",
+                productServices: "NORTH SIX",
+                num: "05/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+                url: "https://francc7.sg-host.com/project-6",
+                project: "ZARA MAN X CASA JOSEPHINE",
+                client: "ZARA",
+                productServices: "NORTH SIX",
+                num: "06/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+                url: "https://francc7.sg-host.com/project-7",
+                project: "CORE SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "07/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+                url: "https://francc7.sg-host.com/project-8",
+                project: "DESIGNER SPRING CAMPAING 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "08/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+                url: "https://francc7.sg-host.com/project-9",
+                project: "DESTINATIONS SUMMER 2024",
+                client: "HARVEY NICHOLS",
+                productServices: "8AM MANAGEMENT",
+                num: "09/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+                url: "https://francc7.sg-host.com/project-1",
+                project: "STREET SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "01/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-2",
+                project: "ARTRAPE RÊVES 2024",
+                client: "LOUIS VUITTON",
+                productServices: "HOLIDAYS PRODUCTION",
+                num: "02/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+                url: "https://francc7.sg-host.com/project-3",
+                project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "03/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-4",
+                project: "COR",
+                client: "",
+                productServices: "LA BELLE FAÇON",
+                num: "04/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+                url: "https://francc7.sg-host.com/project-5",
+                project: "SUMMER CAMPAING 2024",
+                client: "SHOPBOB",
+                productServices: "NORTH SIX",
+                num: "05/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+                url: "https://francc7.sg-host.com/project-6",
+                project: "ZARA MAN X CASA JOSEPHINE",
+                client: "ZARA",
+                productServices: "NORTH SIX",
+                num: "06/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+                url: "https://francc7.sg-host.com/project-7",
+                project: "CORE SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "07/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+                url: "https://francc7.sg-host.com/project-8",
+                project: "DESIGNER SPRING CAMPAING 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "08/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+                url: "https://francc7.sg-host.com/project-9",
+                project: "DESTINATIONS SUMMER 2024",
+                client: "HARVEY NICHOLS",
+                productServices: "8AM MANAGEMENT",
+                num: "09/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+                url: "https://francc7.sg-host.com/project-1",
+                project: "STREET SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "01/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-2",
+                project: "ARTRAPE RÊVES 2024",
+                client: "LOUIS VUITTON",
+                productServices: "HOLIDAYS PRODUCTION",
+                num: "02/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+                url: "https://francc7.sg-host.com/project-3",
+                project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "03/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-4",
+                project: "COR",
+                client: "",
+                productServices: "LA BELLE FAÇON",
+                num: "04/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+                url: "https://francc7.sg-host.com/project-5",
+                project: "SUMMER CAMPAING 2024",
+                client: "SHOPBOB",
+                productServices: "NORTH SIX",
+                num: "05/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+                url: "https://francc7.sg-host.com/project-6",
+                project: "ZARA MAN X CASA JOSEPHINE",
+                client: "ZARA",
+                productServices: "NORTH SIX",
+                num: "06/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+                url: "https://francc7.sg-host.com/project-7",
+                project: "CORE SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "07/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+                url: "https://francc7.sg-host.com/project-8",
+                project: "DESIGNER SPRING CAMPAING 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "08/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+                url: "https://francc7.sg-host.com/project-9",
+                project: "DESTINATIONS SUMMER 2024",
+                client: "HARVEY NICHOLS",
+                productServices: "8AM MANAGEMENT",
+                num: "09/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-1-1.png",
+                url: "https://francc7.sg-host.com/project-1",
+                project: "STREET SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "01/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-2",
+                project: "ARTRAPE RÊVES 2024",
+                client: "LOUIS VUITTON",
+                productServices: "HOLIDAYS PRODUCTION",
+                num: "02/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-9.png",
+                url: "https://francc7.sg-host.com/project-3",
+                project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "03/09",
+            },
+            {
+                video: "https://francc7.sg-host.com/wp-content/uploads/2024/08/Wild-Pictures_Destop-Hover-effect-example-copia.mp4",
+                url: "https://francc7.sg-host.com/project-4",
+                project: "COR",
+                client: "",
+                productServices: "LA BELLE FAÇON",
+                num: "04/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-11.png",
+                url: "https://francc7.sg-host.com/project-5",
+                project: "SUMMER CAMPAING 2024",
+                client: "SHOPBOB",
+                productServices: "NORTH SIX",
+                num: "05/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-12.png",
+                url: "https://francc7.sg-host.com/project-6",
+                project: "ZARA MAN X CASA JOSEPHINE",
+                client: "ZARA",
+                productServices: "NORTH SIX",
+                num: "06/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-13.png",
+                url: "https://francc7.sg-host.com/project-7",
+                project: "CORE SPRING CAMPAIGN 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "07/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-14.png",
+                url: "https://francc7.sg-host.com/project-8",
+                project: "DESIGNER SPRING CAMPAING 2024",
+                client: "ZALANDO",
+                productServices: "RAYO PRODUCTIONS",
+                num: "08/09",
+            },
+            {
+                image: "https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1L-D-15.png",
+                url: "https://francc7.sg-host.com/project-9",
+                project: "DESTINATIONS SUMMER 2024",
+                client: "HARVEY NICHOLS",
+                productServices: "8AM MANAGEMENT",
+                num: "09/09",
+            },
+        ];
+
+        const carouselDesktop = document.getElementById("carousel-desktop");
+const captionContainerDesktop = document.getElementById("caption-desktop");
+
+let currentIndexDesktop = Math.floor(Math.random() * projectsDesktop.length);
+
+// Create and append all carousel items
+projectsDesktop.forEach((project, index) => {
+    const div = createCarouselItemDesktop(project, index);
+    carouselDesktop.appendChild(div);
+});
+
+function createCarouselItemDesktop(project, index) {
+    const div = document.createElement("div");
+    div.className = "carousel-item-desktop";
+    const link = document.createElement("a");
+    link.href = project.url;
+    link.target = "_blank";
+
+    if (project.video) {
+        const videoUrl = document.createElement("video");
+        videoUrl.src = project.video;
+        videoUrl.autoplay = true;
+        videoUrl.loop = true;
+        videoUrl.muted = true;
+        videoUrl.style.width = "100%";
+        videoUrl.style.height = "100%";
+        link.appendChild(videoUrl);
+        videoUrl.controls = true;
+    } else {
+        const img = document.createElement("img");
+        img.src = project.image;
+        link.appendChild(img);
+    }
+
+    div.appendChild(link);
+    return div;
+}
+
+function updateCaptionDesktop(project, index) {
+    captionContainerDesktop.innerHTML = `${project.project} <span class="with-section">WITH</span> ${project.client} <span class="services-section">X</span> ${project.productServices} <span class="index-section">${project.num}</span>`;
+}
+
+function updateCarouselDesktop() {
+    const items = document.querySelectorAll(".carousel-item-desktop");
+    const totalItems = items.length;
+
+    // First, reset all items to inactive
+    items.forEach((item) => {
+        item.classList.remove("active");
+        item.classList.remove("inactive");
+        item.classList.add("hidden-desktop");
+        item.style.height = "var(--inactive-height)";
+    });
+
+    // Get indexes of the surrounding inactive items
+    const prevIndex1 = (currentIndexDesktop - 2 + totalItems) % totalItems;
+    const prevIndex2 = (currentIndexDesktop - 1 + totalItems) % totalItems;
+    const nextIndex1 = (currentIndexDesktop + 1) % totalItems;
+    const nextIndex2 = (currentIndexDesktop + 2) % totalItems;
+
+    // Set active item
+    items[currentIndexDesktop].classList.remove("hidden-desktop");
+    items[currentIndexDesktop].classList.add("active");
+    items[currentIndexDesktop].style.height = "var(--active-height)";
+
+    // Set inactive items above and below the active one
+    items[prevIndex1].classList.remove("hidden-desktop");
+    items[prevIndex1].classList.add("inactive");
+
+    items[prevIndex2].classList.remove("hidden-desktop");
+    items[prevIndex2].classList.add("inactive");
+
+    items[nextIndex1].classList.remove("hidden-desktop");
+    items[nextIndex1].classList.add("inactive");
+
+    items[nextIndex2].classList.remove("hidden-desktop");
+    items[nextIndex2].classList.add("inactive");
+
+    // Update the caption
+    updateCaptionDesktop(projectsDesktop[currentIndexDesktop], currentIndexDesktop);
+}
+
+function moveCarouselUpDesktop() {
+    const items = document.querySelectorAll(".carousel-item-desktop");
+    carouselDesktop.style.transition = "transform var(--transition-duration) ease";
+    currentIndexDesktop = (currentIndexDesktop + 1) % items.length;
+    updateCarouselDesktop();
+}
+
+function moveCarouselDesktop() {
+    const items = document.querySelectorAll(".carousel-item-desktop");
+    carouselDesktop.style.transition = "transform var(--transition-duration) ease";
+    currentIndexDesktop = (currentIndexDesktop - 1 + items.length) % items.length;
+    updateCarouselDesktop();
+}
+
+function startCarouselDesktop() {
+    intervalIdDesktop = setInterval(moveCarouselUpDesktop, 3000);
+}
+
+function stopCarouselDesktop() {
+    clearInterval(intervalIdDesktop);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateCarouselDesktop();
+    startCarouselDesktop(); // Start the carousel when the page loads
+
+    const carouselItems = document.querySelectorAll(".carousel-item-desktop");
+
+    carouselItems.forEach((item) => {
+        item.addEventListener("mouseover", () => {
+            stopCarouselDesktop(); // Pause the carousel on hover
+        });
+
+        item.addEventListener("mouseout", () => {
+            startCarouselDesktop(); // Resume the carousel when mouse leaves
+        });
+    });
+
+    const bodyElement = document.body;
+
+    bodyElement.addEventListener("click", () => {
+        moveCarouselUpDesktop();
+    });
+
+    bodyElement.addEventListener("wheel", (event) => {
+        if (event.deltaY > 0) {
+            moveCarouselUpDesktop();
+        } else {
+            moveCarouselDesktop();
+        }
+    });
+    let touchstartY = 0;
+      let touchendY = 0;
+
+      document.addEventListener("touchstart", (event) => {
+        touchstartY = event.changedTouches[0].screenY;
+      });
+
+      document.addEventListener("touchend", (event) => {
+        touchendY = event.changedTouches[0].screenY;
+        handleGesture();
+      });
+
+      function handleGesture() {
+        if (touchendY <= touchstartY) {
+          // Deslizamiento hacia arriba
+          moveCarouselUpDesktop();
+        }else{ moveCarouselDesktop();// Deslizamiento hacia la abajo
+            }
+      }
+});
+
+
+        // Código JavaScript para el carousel móvil con scroll infinito
+        const mobileProjects = [
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1Home-M.png',
+                url: 'https://francc7.sg-host.com/project-1',
+                project: 'STREET SPRING CAMPAIGN 2024',
+                client: 'ZALANDO',
+                productServices: 'RAYO PRODUCTIONS',
+                indexToPaint: '1 / 9'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1Home-M-1.png',
+                url: 'https://francc7.sg-host.com/project-2',
+                project: 'ARTRAPE RÊVES 2024',
+                client: 'LOUIS VUITTON',
+                productServices: 'HOLIDAYS PRODUCTION',
+                indexToPaint: '2 / 9'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1Home-M-2.png',
+                url: 'https://francc7.sg-host.com/project-3',
+                project: 'DESIGNER ZSUMMER CAMPAIGN 2024',
+                client: 'ZALANDO',
+                productServices: 'RAYO PRODUCTIONS',
+                indexToPaint: '3 / 9'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1Home-M-3.png',
+                url: 'https://francc7.sg-host.com/project-4',
+                project: 'COR',
+                client: 'Client 4',
+                productServices: 'LA BELLE FAÇON',
+                indexToPaint: '4 / 9'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1Home-M-4.png',
+                url: 'https://francc7.sg-host.com/project-5',
+                project: 'SUMMER CAMPAING 2024',
+                client: 'SHOPBOB',
+                productServices: 'NORTH SIX',
+                indexToPaint: '5 / 9'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1Home-M-5.png',
+                url: 'https://francc7.sg-host.com/project-6',
+                project: 'ZARA MAN X CASA JOSEPHINE',
+                client: 'ZARA',
+                productServices: 'NORTH SIX',
+                indexToPaint: '6 / 9'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1Home-M-6.png',
+                url: 'https://francc7.sg-host.com/project-7',
+                project: 'CORE SPRING CAMPAIGN 2024',
+                client: 'ZALANDO',
+                productServices: 'RAYO PRODUCTIONS',
+                indexToPaint: '7 / 9'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1Home-M-7.png',
+                url: 'https://francc7.sg-host.com/project-8',
+                project: 'Designer Spring Campaign 2024',
+                client: 'Zalando',
+                productServices: 'RAYO PRODUCTIONS',
+                indexToPaint: '8 / 9'
+            },
+            {
+                image: 'https://francc7.sg-host.com/wp-content/uploads/2024/07/Property-1Home-M-8.png',
+                url: 'https://francc7.sg-host.com/project-9',
+                project: 'DESTINATIONS SUMMER 2024',
+                client: 'HARVEY NICHOLS',
+                productServices: '8AM MANAGEMENT',
+                indexToPaint: '9 / 9'
+            }
+        ];
+
+        const mobileContainer = document.getElementById('carousel-mobile');
+
+        function createCarouselItems() {
+            mobileProjects.forEach((project, index) => {
+                let item = createCarouselItemMobile(project);
+                mobileContainer.appendChild(item);
+            });
+
+            mobileProjects.forEach((project) => {
+                let itemClone = createCarouselItemMobile(project);
+                mobileContainer.appendChild(itemClone);
+            });
+        }
+
+        function createCarouselItemMobile(project) {
+            let item = document.createElement('a');
+            item.href = project.url;
+            item.target = '_blank';
+            item.className = 'carousel-item-mobile';
+            item.style.backgroundImage = `url(${project.image})`;
+
+            let content = document.createElement('div');
+            content.className = 'carousel-item-content-mobile';
+
+            let title = document.createElement('div');
+            title.className = 'carousel-item-title-mobile';
+            title.textContent = project.project.toUpperCase();
+            content.appendChild(title);
+
+            let indexInfo = document.createElement('div');
+            indexInfo.className = 'carousel-item-index-mobile';
+            indexInfo.textContent = project.indexToPaint;
+            content.appendChild(indexInfo);
+
+            item.appendChild(content);
+
+            let bottomContent = document.createElement('div');
+            bottomContent.className = 'carousel-item-bottom-mobile';
+
+            let section1 = document.createElement('div');
+            section1.className = 'section-mobile';
+            let withText = document.createElement('div');
+            withText.textContent = 'WITH';
+            let productServicesInfo = document.createElement('div');
+            productServicesInfo.className = 'carousel-item-product-services-mobile';
+            productServicesInfo.textContent = project.productServices;
+            section1.appendChild(withText);
+            section1.appendChild(productServicesInfo);
+
+            let section2 = document.createElement('div');
+            section2.className = 'section-mobile';
+            let xText = document.createElement('div');
+            xText.textContent = 'X';
+            let clientInfo = document.createElement('div');
+            clientInfo.className = 'carousel-item-client-mobile';
+            clientInfo.textContent = project.client;
+            section2.appendChild(xText);
+            section2.appendChild(clientInfo);
+
+            bottomContent.appendChild(section1);
+            bottomContent.appendChild(section2);
+
+            item.appendChild(bottomContent);
+            return item;
+        }
+
+        createCarouselItems();
+
+        // Ajustar el scroll infinito en ambas direcciones
+        mobileContainer.addEventListener('scroll', () => {
+    const maxScrollTop = mobileContainer.scrollHeight - mobileContainer.clientHeight;
+
+    if (mobileContainer.scrollTop <= 1) {
+        mobileContainer.scrollTop = maxScrollTop / 2;
+    }
+
+    if (mobileContainer.scrollTop >= maxScrollTop) {
+        mobileContainer.scrollTop = maxScrollTop / 2;
+    }
+});
+
+        // Inicialmente, desplazarse al medio para el bucle
+        mobileContainer.scrollTop = mobileContainer.scrollHeight / 2;
+    </script>
+</body>
+
+</html>
