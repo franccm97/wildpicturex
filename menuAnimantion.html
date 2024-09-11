@@ -1,247 +1,299 @@
 <!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popup Mobile</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Header Project Page</title>
+    <!-- Enlace a Google Fonts para la fuente Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      /* Aplicamos la fuente Inter a todo el documento */
+      body {
+        background-color: white;
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Estilos del header para Desktop */
+      .header-desktop {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 30;
+      }
+
+      .links {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1.375rem;
+      }
+
+      .about-contact a,
+      .close a {
+        color: white;
+        font-size: 14px;
+        margin: 0 10px;
+        text-decoration: none;
+      }
+
+      .logo-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        mix-blend-mode: difference; /* Solo aplicar mix-blend-mode al contenedor del logo */
+      }
+
+      .logo img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Header para móviles */
+      .div-header-mobile {
+        display: none; /* Inicialmente oculto en pantallas grandes */
+        position: sticky;
+        top: 0;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        background-color: white; /* Fondo blanco */
+      }
+
+      .header-mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .menu-activador {
+        width: 30px;
+        height: 20px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        cursor: pointer;
+        margin-bottom: 20px; /* Separación de 20px del logo */
+      }
+
+      .menu-activador-linea {
+        height: 2px;
+        background-color: black; /* Todas las líneas del menú son negras */
+        transition: all 0.3s;
+      }
+
+      .menu-activador.open .menu-activador-linea:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+        background-color: black;
+      }
+
+      .menu-activador.open .menu-activador-linea:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-activador.open .menu-activador-linea:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+        background-color: black;
+      }
+
+      /* Logo del header móvil */
+      .logo-mobile-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        mix-blend-mode: difference; /* Solo el logo en móvil usa mix-blend-mode */
+      }
+
+      .logo-mobile img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Estilos del popup */
+      .pop-up {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        padding: 20px; /* Padding de 20px por cada lado */
+        z-index: 1000;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box; /* Asegura que el padding esté incluido en el ancho */
+      }
+
+      .pop-up.show {
+        display: flex;
+      }
+
+      .popup-links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        color: black;
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .popup-links a {
+        color: black;
+        margin: 20px 0;
+        text-decoration: none;
+      }
+
+      .input-pop-up {
+        display: flex;
+        flex-direction: column;
+        width: 100%; /* Ancho completo */
+        max-width: 400px;
+        margin-bottom: 20px;
+      }
+
+      .input-pop-up label {
+        text-align: center;
+        color: black;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      .input-pop-up input {
+        flex: 1;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        width: 100%; /* Ancho completo */
+        box-sizing: border-box; /* Incluye el padding en el ancho */
+      }
+
+      .input-pop-up button {
+        padding: 12px;
+        background-color: black;
+        color: white;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 100%; /* Ancho completo */
+      }
+
+      .input-pop-up button:hover {
+        background-color: #333;
+      }
+
+      /* Mostrar el header móvil solo en pantallas pequeñas */
+      @media only screen and (max-width: 600px) {
+        .header-desktop {
+          display: none;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
+        .div-header-mobile {
+          display: flex;
         }
-
-        /* Header con padding de 20px */
-        .header {
-            width: 100%;
-            padding: 20px;
-            background-color: blue;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-
-        /* Logo responsive */
-        .logo {
-            margin-top: 20px; /* Añadir separación de 20px debajo del menú */
-        }
-
-        .logo img {
-            max-width: 100%;
-            height: auto;
-            width: auto;
-        }
-
-        .menu-activador {
-            width: 30px;
-            height: 20px;
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 1100;
-            transition: transform 0.3s ease;
-        }
-
-        .menu-activador-linea {
-            width: 100%;
-            height: 2px;
-            background-color: #fff; /* Cambiar color a blanco */
-            transition: all 0.3s;
-        }
-
-        .menu-activador.open .menu-activador-linea:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-        }
-
-        .menu-activador.open .menu-activador-linea:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-activador.open .menu-activador-linea:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-        }
-
-        .menu-activador.open .menu-activador-linea {
-            background-color: #000;
-            /* Cambiar color a negro al convertirse en cruz */
-        }
-
-        .pop-up {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            visibility: hidden;
-        }
-
-        #menuActivadorInPopup {
-            display: none;
-        }
-
-        .pop-up.show {
-            visibility: visible;
-        }
-
-        .pop-up a {
-            font-family: Inter, sans-serif;
-            font-size: 13px;
-            color: #000;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .pop-up p {
-            font-family: Inter, sans-serif;
-            font-size: 13px;
-            color: #000;
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 20px;
-        }
-
-        .input-pop-up {
-            display: flex;
-        }
-
-        .input-pop-up input {
-            flex: 1;
-            padding: 8px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px 0 0 4px;
-            outline: none;
-        }
-
-        .input-pop-up button {
-            padding: 8px 12px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-left: none;
-            background-color: #000;
-            color: #fff;
-            cursor: pointer;
-            border-radius: 0 4px 4px 0;
-        }
-
-        .input-pop-up button:hover {
-            background-color: #333;
-        }
-
-        /* Media queries para dispositivos móviles */
-        @media only screen and (max-width: 768px) {
-            .header {
-                padding: 20px;
-            }
-
-            .pop-up {
-                padding: 20px;
-            }
-
-            .input-pop-up input,
-            .input-pop-up button {
-                font-size: 13px;
-            }
-
-            /* Escalar el logo según el tamaño de la pantalla */
-            .logo img {
-                max-height: 8vh;
-            }
-        }
-
-        /* Solo mostrar en pantallas móviles */
-        @media only screen and (min-width: 600px) {
-            .container {
-                display: none;
-            }
-        }
-
-        .links {
-            display: flex;
-            flex-direction: column;
-            row-gap: 40px;
-            align-items: center;
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div class="header">
+  <body>
+    <!-- Header Desktop -->
+    <header class="header-desktop">
+      <div class="links">
+        <div class="about-contact">
+          <a href="#">ABOUT</a>
+          <a href="#">CONTACT</a>
+        </div>
+        <div class="close">
+          <a href="#">CLOSE</a>
+        </div>
+      </div>
+      <div class="logo-container">
+        <img
+          src="https://francc7.sg-host.com/wp-content/uploads/2024/08/Logo-Desktop-2.png"
+          alt="Logo"
+          class="logo"
+        />
+      </div>
+    </header>
+
+    <!-- Header móvil -->
+    <div class="div-header-mobile">
+      <div class="header-mobile">
         <div class="menu-activador" id="menuActivador">
-            <div class="menu-activador-linea"></div>
-            <div class="menu-activador-linea"></div>
-            <div class="menu-activador-linea"></div>
+          <div class="menu-activador-linea"></div>
+          <div class="menu-activador-linea"></div>
+          <div class="menu-activador-linea"></div>
         </div>
-        <div class="logo">
-            <img src="https://francc7.sg-host.com/wp-content/uploads/2024/09/LogoSVGmobile.svg" alt="Logo">
+        <div class="logo-mobile-container" id="logoMobileContainer">
+          <img
+            src="https://francc7.sg-host.com/wp-content/uploads/2024/09/LogoSVGmobile.svg"
+            alt="Logo"
+            class="logo-mobile"
+          />
         </div>
-    </div>
+      </div>
 
-    <div class="pop-up" id="popup">
+      <!-- Popup que cubre toda la pantalla -->
+      <div class="pop-up" id="popup">
         <div class="menu-activador open" id="menuActivadorInPopup">
-            <div class="menu-activador-linea"></div>
-            <div class="menu-activador-linea"></div>
-            <div class="menu-activador-linea"></div>
-        </div>
-        <div class="links">
-            <a href="#">ABOUT</a>
-            <a href="mailto:info@wildpictures.xyz">CONTACT</a>
+          <div class="menu-activador-linea"></div>
+          <div class="menu-activador-linea"></div>
+          <div class="menu-activador-linea"></div>
         </div>
 
-        <div class="form">
-            <p>Subscribe to our newsletter:</p>
-            <div class="input-pop-up">
-                <input type="text" placeholder="Sign Up">
-                <button>SUBMIT</button>
-            </div>
+        <!-- Enlaces dentro del popup -->
+        <div class="popup-links">
+          <a href="#">ABOUT</a>
+          <a href="mailto:info@wildpictures.xyz">CONTACT</a>
         </div>
+
+        <!-- Formulario dentro del popup -->
+        <div class="input-pop-up">
+          <label>Subscribe to our newsletter:</label>
+          <input type="text" placeholder="Sign Up" />
+          <button>SUBMIT</button>
+        </div>
+      </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const menuActivador = document.getElementById('menuActivador');
-            const popup = document.getElementById('popup');
-            const menuActivadorInPopup = document.getElementById('menuActivadorInPopup');
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuActivador = document.getElementById("menuActivador");
+        const popup = document.getElementById("popup");
+        const menuActivadorInPopup = document.getElementById("menuActivadorInPopup");
+        const logoMobile = document.getElementById("logoMobileContainer");
 
-            // Mostrar el pop-up después de la animación del menú activador
-            menuActivador.addEventListener('click', function () {
-                menuActivador.classList.add('open');
-                setTimeout(function () {
-                    popup.style.display = 'flex';
-                    popup.classList.add('show');
-                    menuActivador.style.display = 'none';
-                    menuActivadorInPopup.style.display = 'flex';
-                }, 300);
-            });
-
-            // Cerrar el pop-up al hacer clic en el menú activador dentro del pop-up
-            menuActivadorInPopup.addEventListener('click', function () {
-                popup.style.display = 'none';
-                popup.classList.remove('show');
-                menuActivadorInPopup.style.display = 'none';
-                menuActivador.style.display = 'flex';
-                setTimeout(function () {
-                    menuActivador.classList.remove('open');
-                }, 10);
-            });
+        // Cuando se hace clic en la hamburguesa (menuActivador)
+        menuActivador.addEventListener("click", function () {
+          menuActivador.classList.add("open");
+          setTimeout(() => {
+            popup.classList.add("show"); // Mostrar el popup
+            logoMobile.style.display = "none"; // Ocultar el logo móvil
+            menuActivador.style.display = "none"; // Ocultar el menú activador original
+            menuActivadorInPopup.style.display = "flex"; // Mostrar la "X"
+          }, 300);
         });
-    </script>
-</body>
 
+        // Cuando se hace clic en la "X" dentro del popup
+        menuActivadorInPopup.addEventListener("click", function () {
+          popup.classList.remove("show"); // Ocultar el popup
+          menuActivadorInPopup.style.display = "none"; // Ocultar la "X"
+          logoMobile.style.display = "flex"; // Mostrar nuevamente el logo móvil
+          menuActivador.style.display = "flex"; // Mostrar el menú activador original
+          setTimeout(() => {
+            menuActivador.classList.remove("open"); // Remover clase "open"
+          }, 10);
+        });
+      });
+    </script>
+  </body>
 </html>
