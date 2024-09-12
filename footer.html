@@ -1,0 +1,50 @@
+<div class="containerForm">
+    <div class="inputContainer">
+      <input type="text" class="custom-input" placeholder="Sing Up">
+    </div>
+    <div class="buttonContainer">
+      <button type="submit" class="custom-submit-button">SUBMIT</button>
+    </div>
+  </div>
+  
+  <style>
+   .containerForm {
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  .custom-input::placeholder {
+    text-align: left;
+    /* Alinea el placeholder a la izquierda */
+  }
+  
+  .inputContainer {
+    flex: 1;
+  }
+  
+  .custom-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 13px;
+    color: #888;
+    outline: none; /* Elimina el borde azul en foco */
+    border: none !important;
+    border-bottom: 1px solid black; 
+  }
+  
+  .custom-input:focus {
+    border: none; /* Asegura que no haya bordes cuando el campo está enfocado */
+    box-shadow: none; /* Asegura que no haya sombra cuando el campo está enfocado */
+  }
+  
+  .custom-submit-button {
+    padding-left: 30px;
+    cursor: pointer;
+    font-size: 13px;
+    color: black;
+    background: white;
+    font-weight: 500;
+  }
+  
+  </style>
+  
