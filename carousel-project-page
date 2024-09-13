@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infinite Carousel</title>
+    <style>
+      @media only screen and (max-width: 600px) {
+        .carousel-item {
+          height: 100px !important; /* Altura fija para cada item */
+        }
+      }
+      .carousel-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .carousel {
+        display: flex;
+        gap: 120px; /* Ajuste del espacio entre los elementos */
+        transition: transform 0.5s ease;
+        will-change: transform;
+      }
+
+      .carousel-item {
+        flex: 0 0 auto;
+        height: 163px; /* Altura fija para cada item */
+        text-align: center;
+        transition: filter 0.3s ease; /* Transición para el efecto de hover */
+      }
+
+      .carousel-item img {
+        height: 100%;
+        width: auto; /* Mantener la relación de aspecto y hacer que el ancho sea adaptativo */
+        object-fit: cover;
+        cursor: pointer;
+      }
+
+      /* Efecto de hover */
+      .carousel-item:hover {
+        filter: blur(2px);
+      }
+      @media only screen and (max-width: 600px) {
+        .carousel {
+        gap: 20px; /* Ajuste del espacio entre los elementos */
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel-container">
+      <div class="carousel" id="carousel">
+        <!-- Los items del carrusel serán generados dinámicamente con JavaScript -->
+      </div>
+    </div>
+
+    <script>
+      const carouselData = [
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-1/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p2.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-2/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p3.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-3/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p4.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-4/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-5/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-6/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-7/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-8/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-9/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p10.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-10/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP11.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-11/",
+        },
+        {
+          image:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
+          url: "https://www.wildpictures.xyz/proyecto/project-12/",
+        },
+        
+      ];
+
+      // Función para construir el carrusel dinámicamente
+      function buildCarousel(data) {
+        const carousel = document.getElementById("carousel");
+
+        // Duplicar los items para crear el efecto de desplazamiento infinito
+        const dataToRender = [...data, ...data];
+
+        dataToRender.forEach((item) => {
+          const carouselItem = document.createElement("div");
+          carouselItem.classList.add("carousel-item");
+
+          const img = document.createElement("img");
+          img.src = item.image;
+          img.alt = "Carousel item";
+          img.onclick = () => (window.location.href = item.url); // Redirige a la URL al hacer clic
+
+          carouselItem.appendChild(img);
+          carousel.appendChild(carouselItem);
+        });
+      }
+
+      // Llamada a la función para construir el carrusel
+      buildCarousel(carouselData);
+
+      let currentIndex = 0;
+      const items = document.querySelectorAll(".carousel-item");
+      const totalItems = items.length;
+
+      function moveCarousel() {
+        const carousel = document.querySelector(".carousel");
+        currentIndex++;
+        if (currentIndex >= totalItems / 2) {
+          currentIndex = 0;
+          carousel.style.transition = "none";
+          carousel.style.transform = "translateX(0)";
+          setTimeout(() => {
+            carousel.style.transition = "transform 0.5s ease";
+            moveCarousel();
+          }, 50);
+        } else {
+          const translateX = -(
+            currentIndex *
+            (items[0].offsetWidth + parseInt(getComputedStyle(carousel).gap))
+          );
+          carousel.style.transform = `translateX(${translateX}px)`;
+        }
+      }
+      function moveCarouselLeft() {
+        const carousel = document.querySelector(".carousel");
+        if (currentIndex != 0) {
+          currentIndex--;
+          if (currentIndex >= totalItems / 2) {
+            currentIndex = 0;
+            carousel.style.transition = "none";
+            carousel.style.transform = "translateX(0)";
+            setTimeout(() => {
+              carousel.style.transition = "transform 0.5s ease";
+              moveCarousel();
+            }, 50);
+          } else {
+            const translateX = -(
+              currentIndex *
+              (items[0].offsetWidth + parseInt(getComputedStyle(carousel).gap))
+            );
+            carousel.style.transform = `translateX(${translateX}px)`;
+          }
+        } else {
+        }
+      }
+
+      setInterval(moveCarousel, 3000); // Mueve el carrusel cada 3 segundos
+
+      document.addEventListener("click", (event) => {
+        //   if (isHovering === false) {
+        moveCarousel();
+        //   }
+      });
+      // document.addEventListener("wheel", (event) => {
+      //   if (event.deltaY > 0) {
+      //     //lógica para desplazarse hacia arriba
+      //     moveCarouselLeft();
+      //   } else {
+      //     //lógica para desplazarse hacia abajo
+      //     moveCarousel();
+      //   }
+      // });
+      
+      let touchstartX = 0;
+      let touchendX = 0;
+
+      document.addEventListener("touchstart", (event) => {
+        touchstartX = event.changedTouches[0].screenX;
+      });
+
+      document.addEventListener("touchend", (event) => {
+        touchendX = event.changedTouches[0].screenX;
+        handleGesture();
+      });
+
+      function handleGesture() {
+        if (touchendX <= touchstartX) {
+          // Deslizamiento hacia la derecha
+          moveCarousel();
+        }else{moveCarouselLeft();// Deslizamiento hacia la izquierda
+            }
+      }
+    </script>
+  </body>
+</html>
