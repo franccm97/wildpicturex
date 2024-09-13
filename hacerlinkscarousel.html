@@ -1,1281 +1,1327 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Responsive Carousel</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
-      /* Estilos para el carousel de escritorio */
-      :root {
-        --active-height: 70vh;
-        --inactive-height: 20vh;
-        --transition-duration: 0.5s; /* Animación más suave */
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Carousel</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+    /* Estilos para el carousel de escritorio */
+    :root {
+      --active-height: 70vh;
+      --inactive-height: 20vh;
+      --transition-duration: 0.5s;
+      /* Animación más suave */
+    }
+
+    .carousel-container-desktop {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .carousel-desktop {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform var(--transition-duration) ease;
+      overflow: hidden;
+    }
+
+    .carousel-item-desktop {
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      height: var(--inactive-height);
+      width: 100%;
+      margin: 10px 0;
+      transition: height var(--transition-duration),
+        filter var(--transition-duration);
+      overflow: hidden;
+    }
+
+    .carousel-item-desktop img {
+      height: 100%;
+      width: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      object-fit: contain;
+    }
+
+    .carousel-item-desktop.active {
+      height: var(--active-height);
+      width: 100%;
+      object-fit: cover !important;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .carousel-item-desktop.inactive {
+      width: 25vw;
+    }
+
+    .carousel-item-desktop.active:hover img,
+    .carousel-item-desktop.active:hover video {
+      filter: blur(2px);
+    }
+
+    .hidden-desktop {
+      display: none;
+    }
+
+    .overlay-desktop {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      mix-blend-mode: difference;
+      padding: 0 1.25rem;
+    }
+
+    .logo-container-desktop img {
+      width: 100%;
+      height: 60px;
+    }
+
+    .caption-container-desktop {
+      font-size: 14px;
+      font-weight: 400;
+      display: flex;
+      justify-content: end;
+      /* white-space: nowrap; */
+      color: white;
+    }
+
+    .caption-container-desktop .with-section,
+    .caption-container-desktop .services-section {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+
+    .caption-container-desktop .index-section {
+      padding-left: 2.5rem;
+    }
+
+    /* Estilos para el carousel móvil */
+    .carousel-container-mobile {
+      display: none;
+      position: relative;
+      height: 100vh;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+    }
+
+    .carousel-item-mobile {
+      width: 100%;
+      height: 92dvh;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .carousel-item-content-mobile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 20px;
+      font-family: "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .carousel-item-title-mobile {
+      flex: 1;
+      text-align: left;
+    }
+
+    .carousel-item-index-mobile {
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .carousel-item-bottom-mobile {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: white;
+    }
+
+    .carousel-item-bottom-mobile .section-mobile {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+    }
+
+    .carousel-item-client-mobile,
+    .carousel-item-product-services-mobile {
+      text-transform: uppercase;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Media Queries */
+    @media only screen and (max-width: 600px) {
+      .carousel-item-desktop video {
+        display: none;
+      }
+
+      video {
+        display: none;
       }
 
       .carousel-container-desktop {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
+        display: none;
+      }
+
+      .carousel-container-mobile {
+        display: block;
+      }
+    }
+
+    @media only screen and (min-width: 600px) {
+      .carousel-container-mobile {
+        display: none;
+      }
+    }
+
+    /*Tablet*/
+    @media only screen and (min-width: 600px) and (max-width: 1023px) {
+      .carousel-container-desktop {
         display: flex;
         justify-content: center;
         align-items: center;
       }
 
       .carousel-desktop {
-        position: relative;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        transition: transform var(--transition-duration) ease;
+        /* Vertical direction */
         overflow: hidden;
+        width: auto;
+        height: 100vh;
+        /* Full viewport height */
       }
 
       .carousel-item-desktop {
-        position: relative;
-        justify-content: center;
-        align-items: center;
-        height: var(--inactive-height);
-        width: 100%;
-        margin: 10px 0;
+        width: var(--inactive-width);
+        /* Set width for inactive items */
         transition: height var(--transition-duration),
+          transform var(--transition-duration),
           filter var(--transition-duration);
-        overflow: hidden;
       }
 
-      .carousel-item-desktop img {
-        height: 100%;
-        width: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        object-fit: contain;
+      .carousel-item-desktop.small {
+        flex: 0 0 10%;
+        /* Smaller inactive items */
+        height: var(--small-height);
+        /* Smaller height */
+      }
+
+      .carousel-item-desktop.medium {
+        flex: 0 0 20%;
+        /* Slightly bigger inactive items */
+        height: var(--medium-height);
+        /* Medium height */
       }
 
       .carousel-item-desktop.active {
+        flex: 0 0 40%;
+        /* The active item takes up 40% of the height */
         height: var(--active-height);
-        width: 100%;
-        object-fit: cover !important;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+        width: var(--active-width);
+        /* Adjust width for active items if needed */
       }
 
       .carousel-item-desktop.inactive {
-        width: 25vw;
+        filter: brightness(0.5);
+        transition: filter var(--transition-duration);
       }
 
-      .carousel-item-desktop.active:hover img,
-      .carousel-item-desktop.active:hover video {
-        filter: blur(2px);
+      .carousel-desktop {
+        justify-content: center;
+        align-items: center;
       }
 
-      .hidden-desktop {
-        display: none;
+      .carousel-desktop>.carousel-item-desktop {
+        transition: transform var(--transition-duration);
       }
 
       .overlay-desktop {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
+        display: flex;
+        /* top: 50%;
+            left: 50%;
+            width: 100%; */
         display: flex;
         align-items: center;
         justify-content: space-between;
-        transform: translate(-50%, -50%);
+        /* transform: translate(-50%, -50%); */
         z-index: 2;
         mix-blend-mode: difference;
-        padding: 0 1.25rem;
-      }
-
-      .logo-container-desktop img {
-        width: 100%;
-        height: 60px;
       }
 
       .caption-container-desktop {
-        font-size: 14px;
-        font-weight: 400;
         display: flex;
-        justify-content: end;
-        /* white-space: nowrap; */
+        font-size: 0.8rem;
+        font-weight: 200;
+        white-space: nowrap;
+        padding-right: 20px !important;
         color: white;
+        margin-top: 12px;
+        /* Agregado margen superior */
+        margin-left: 12px;
+        /* Agregado margen izquierdo */
       }
 
-      .caption-container-desktop .with-section,
-      .caption-container-desktop .services-section {
-        padding-left: 2.5rem;
-        padding-right: 2.5rem;
-      }
-
-      .caption-container-desktop .index-section {
-        padding-left: 2.5rem;
-      }
-
-      /* Estilos para el carousel móvil */
-      .carousel-container-mobile {
+      .with-section {
         display: none;
-        position: relative;
-        height: 100vh;
-        overflow-y: auto;
-        scroll-snap-type: y mandatory;
       }
 
-      .carousel-item-mobile {
-        width: 100%;
-        height: 94dvh;
-        background-size: cover;
-        background-position: center;
-        position: relative;
-        scroll-snap-align: start;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+      .logo-container-desktop img {
+        width: 65%;
+        height: 60px;
       }
 
-      .carousel-item-content-mobile {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        padding: 10px 20px;
-        font-family: "Inter", sans-serif;
-        font-weight: 500;
-        font-size: 14px;
-        color: white;
-        text-transform: uppercase;
+      #caption-desktop {
+        width: 60%;
       }
+    }
+  </style>
+</head>
 
-      .carousel-item-title-mobile {
-        flex: 1;
-        text-align: left;
-      }
-
-      .carousel-item-index-mobile {
-        flex-shrink: 0;
-        text-align: right;
-      }
-
-      .carousel-item-bottom-mobile {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        font-family: "Inter", sans-serif;
-        font-weight: 500;
-        font-size: 14px;
-        color: white;
-      }
-
-      .carousel-item-bottom-mobile .section-mobile {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 5px 0;
-      }
-
-      .carousel-item-client-mobile,
-      .carousel-item-product-services-mobile {
-        text-transform: uppercase;
-      }
-      iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-
-      /* Media Queries */
-      @media only screen and (max-width: 600px) {
-        .carousel-item-desktop video {
-          display: none;
-        }
-        video{
-          display: none;
-        }
-        .carousel-container-desktop {
-          display: none;
-        }
-
-        .carousel-container-mobile {
-          display: block;
-        }
-      }
-
-      @media only screen and (min-width: 600px) {
-        .carousel-container-mobile {
-          display: none;
-        }
-      }
-
-      /*Tablet*/
-      @media only screen and (min-width: 600px) and (max-width: 1023px) {
-        .carousel-container-desktop {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .carousel-desktop {
-          display: flex;
-          flex-direction: column; /* Vertical direction */
-          overflow: hidden;
-          width: auto;
-          height: 100vh; /* Full viewport height */
-        }
-
-        .carousel-item-desktop {
-          width: var(--inactive-width); /* Set width for inactive items */
-          transition: height var(--transition-duration),
-            transform var(--transition-duration),
-            filter var(--transition-duration);
-        }
-
-        .carousel-item-desktop.small {
-          flex: 0 0 10%; /* Smaller inactive items */
-          height: var(--small-height); /* Smaller height */
-        }
-
-        .carousel-item-desktop.medium {
-          flex: 0 0 20%; /* Slightly bigger inactive items */
-          height: var(--medium-height); /* Medium height */
-        }
-
-        .carousel-item-desktop.active {
-          flex: 0 0 40%; /* The active item takes up 40% of the height */
-          height: var(--active-height);
-          width: var(
-            --active-width
-          ); /* Adjust width for active items if needed */
-        }
-
-        .carousel-item-desktop.inactive {
-          filter: brightness(0.5);
-          transition: filter var(--transition-duration);
-        }
-
-        .carousel-desktop {
-          justify-content: center;
-          align-items: center;
-        }
-
-        .carousel-desktop > .carousel-item-desktop {
-          transition: transform var(--transition-duration);
-        }
-        .overlay-desktop {
-          position: absolute;
-          display: flex;
-          /* top: 50%;
-            left: 50%;
-            width: 100%; */
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          /* transform: translate(-50%, -50%); */
-          z-index: 2;
-          mix-blend-mode: difference;
-        }
-        .caption-container-desktop {
-          display: flex;
-          font-size: 0.8rem;
-          font-weight: 200;
-          white-space: nowrap;
-          padding-right: 20px !important;
-          color: white;
-          margin-top: 12px; /* Agregado margen superior */
-          margin-left: 12px; /* Agregado margen izquierdo */
-        }
-        .with-section {
-          display: none;
-        }
-        .logo-container-desktop img {
-          width: 65%;
-          height: 60px;
-        }
-        #caption-desktop {
-          width: 60%;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- Carousel de escritorio/tablet -->
-    <div class="carousel-container-desktop">
-      <div class="overlay-desktop">
-        <div class="logo-container-desktop">
-          <img
-            src="https://francc7.sg-host.com/wp-content/uploads/2024/06/Capa_1.svg"
-            alt="Logo"
-          />
-        </div>
-        <div id="caption-desktop" class="caption-container-desktop"></div>
+<body>
+  <!-- Carousel de escritorio/tablet -->
+  <div class="carousel-container-desktop">
+    <div class="overlay-desktop">
+      <div class="logo-container-desktop">
+        <img src="https://francc7.sg-host.com/wp-content/uploads/2024/06/Capa_1.svg" alt="Logo" />
       </div>
-      <div id="carousel-desktop" class="carousel-desktop">
-        <!-- Items serán inyectados aquí por JavaScript -->
-      </div>
+      <div id="caption-desktop" class="caption-container-desktop"></div>
     </div>
-
-    <!-- Carousel móvil -->
-    <div class="carousel-container-mobile" id="carousel-mobile">
-      <!-- Los elementos del carousel se generarán dinámicamente con JavaScript -->
+    <div id="carousel-desktop" class="carousel-desktop">
+      <!-- Items serán inyectados aquí por JavaScript -->
     </div>
+  </div>
 
-    <script>
-      // Código JavaScript para el carousel de escritorio/tablet
-      const projectsDesktop = [
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-1/",
-          project: "STREET SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "01/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-2/",
-          project: "ARTRAPE RÊVES 2024",
-          client: "LOUIS VUITTON",
-          productServices: "HOLIDAYS PRODUCTION",
-          num: "02/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-3/",
-          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "03/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-4/",
-          project: "COR",
-          client: "",
-          productServices: "LA BELLE FAÇON",
-          num: "04/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-5/",
-          project: "ZARA WOMAN AUSTRALIA",
-          client: "ZARA WOMAN",
-          productServices: "NORTH SIX",
-          num: "05/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-6/",
-          project: "SUMMER CAMPAING 2024",
-          client: "SHOPBOB",
-          productServices: "NORTH SIX",
-          num: "06/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-7/",
-          project: "ZARA MAN X CASA JOSEPHINE",
-          client: "ZARA",
-          productServices: "NORTH SIX",
-          num: "07/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-8/",
-          project: "CORE SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "08/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-9/",
-          project: "DESIGNER SPRING CAMPAING 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "09/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-10/",
-          project: "DESTINATIONS SUMMER 2024",
-          client: "HARVEY NICHOLS",
-          productServices: "8AM MANAGEMENT",
-          num: "10/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-11/",
-          project: "FALL-WINTER 2024",
-          client: "ISABEL MARANT",
-          productServices: "HOLIDAYS",
-          num: "11/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-12/",
-          project: "Audi QR-S8",
-          client: "AUDI",
-          productServices: "FALCA",
-          num: "12/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-1/",
-          project: "STREET SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "01/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-2/",
-          project: "ARTRAPE RÊVES 2024",
-          client: "LOUIS VUITTON",
-          productServices: "HOLIDAYS PRODUCTION",
-          num: "02/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-3/",
-          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "03/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-4/",
-          project: "COR",
-          client: "",
-          productServices: "LA BELLE FAÇON",
-          num: "04/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-5/",
-          project: "ZARA WOMAN AUSTRALIA",
-          client: "ZARA WOMAN",
-          productServices: "NORTH SIX",
-          num: "05/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-6/",
-          project: "SUMMER CAMPAING 2024",
-          client: "SHOPBOB",
-          productServices: "NORTH SIX",
-          num: "06/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-7/",
-          project: "ZARA MAN X CASA JOSEPHINE",
-          client: "ZARA",
-          productServices: "NORTH SIX",
-          num: "07/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-8/",
-          project: "CORE SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "08/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-9/",
-          project: "DESIGNER SPRING CAMPAING 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "09/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-10/",
-          project: "DESTINATIONS SUMMER 2024",
-          client: "HARVEY NICHOLS",
-          productServices: "8AM MANAGEMENT",
-          num: "10/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-11/",
-          project: "FALL-WINTER 2024",
-          client: "ISABEL MARANT",
-          productServices: "HOLIDAYS",
-          num: "11/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-12/",
-          project: "Audi QR-S8",
-          client: "AUDI",
-          productServices: "FALCA",
-          num: "12/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-1/",
-          project: "STREET SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "01/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-2/",
-          project: "ARTRAPE RÊVES 2024",
-          client: "LOUIS VUITTON",
-          productServices: "HOLIDAYS PRODUCTION",
-          num: "02/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-3/",
-          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "03/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-4/",
-          project: "COR",
-          client: "",
-          productServices: "LA BELLE FAÇON",
-          num: "04/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-5/",
-          project: "ZARA WOMAN AUSTRALIA",
-          client: "ZARA WOMAN",
-          productServices: "NORTH SIX",
-          num: "05/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-6/",
-          project: "SUMMER CAMPAING 2024",
-          client: "SHOPBOB",
-          productServices: "NORTH SIX",
-          num: "06/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-7/",
-          project: "ZARA MAN X CASA JOSEPHINE",
-          client: "ZARA",
-          productServices: "NORTH SIX",
-          num: "07/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-8/",
-          project: "CORE SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "08/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-9/",
-          project: "DESIGNER SPRING CAMPAING 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "09/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-10/",
-          project: "DESTINATIONS SUMMER 2024",
-          client: "HARVEY NICHOLS",
-          productServices: "8AM MANAGEMENT",
-          num: "10/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-11/",
-          project: "FALL-WINTER 2024",
-          client: "ISABEL MARANT",
-          productServices: "HOLIDAYS",
-          num: "11/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-12/",
-          project: "Audi QR-S8",
-          client: "AUDI",
-          productServices: "FALCA",
-          num: "12/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-1/",
-          project: "STREET SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "01/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-2/",
-          project: "ARTRAPE RÊVES 2024",
-          client: "LOUIS VUITTON",
-          productServices: "HOLIDAYS PRODUCTION",
-          num: "02/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-3/",
-          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "03/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-4/",
-          project: "COR",
-          client: "",
-          productServices: "LA BELLE FAÇON",
-          num: "04/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-5/",
-          project: "ZARA WOMAN AUSTRALIA",
-          client: "ZARA WOMAN",
-          productServices: "NORTH SIX",
-          num: "05/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-6/",
-          project: "SUMMER CAMPAING 2024",
-          client: "SHOPBOB",
-          productServices: "NORTH SIX",
-          num: "06/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-7/",
-          project: "ZARA MAN X CASA JOSEPHINE",
-          client: "ZARA",
-          productServices: "NORTH SIX",
-          num: "07/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-8/",
-          project: "CORE SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "08/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-9/",
-          project: "DESIGNER SPRING CAMPAING 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "09/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-10/",
-          project: "DESTINATIONS SUMMER 2024",
-          client: "HARVEY NICHOLS",
-          productServices: "8AM MANAGEMENT",
-          num: "10/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-11/",
-          project: "FALL-WINTER 2024",
-          client: "ISABEL MARANT",
-          productServices: "HOLIDAYS",
-          num: "11/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-12/",
-          project: "Audi QR-S8",
-          client: "AUDI",
-          productServices: "FALCA",
-          num: "12/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-1/",
-          project: "STREET SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "01/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-2/",
-          project: "ARTRAPE RÊVES 2024",
-          client: "LOUIS VUITTON",
-          productServices: "HOLIDAYS PRODUCTION",
-          num: "02/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-3/",
-          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "03/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-4/",
-          project: "COR",
-          client: "",
-          productServices: "LA BELLE FAÇON",
-          num: "04/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-5/",
-          project: "ZARA WOMAN AUSTRALIA",
-          client: "ZARA WOMAN",
-          productServices: "NORTH SIX",
-          num: "05/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-6/",
-          project: "SUMMER CAMPAING 2024",
-          client: "SHOPBOB",
-          productServices: "NORTH SIX",
-          num: "06/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-7/",
-          project: "ZARA MAN X CASA JOSEPHINE",
-          client: "ZARA",
-          productServices: "NORTH SIX",
-          num: "07/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-8/",
-          project: "CORE SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "08/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-9/",
-          project: "DESIGNER SPRING CAMPAING 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          num: "09/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-10/",
-          project: "DESTINATIONS SUMMER 2024",
-          client: "HARVEY NICHOLS",
-          productServices: "8AM MANAGEMENT",
-          num: "10/12",
-        },
-        {
-          video:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
-          url: "https://www.wildpictures.xyz/proyecto/project-11/",
-          project: "FALL-WINTER 2024",
-          client: "ISABEL MARANT",
-          productServices: "HOLIDAYS",
-          num: "11/12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-12/",
-          project: "Audi QR-S8",
-          client: "AUDI",
-          productServices: "FALCA",
-          num: "12/12",
-        },
-      ];
+  <!-- Carousel móvil -->
+  <div class="carousel-container-mobile" id="carousel-mobile">
+    <!-- Los elementos del carousel se generarán dinámicamente con JavaScript -->
+  </div>
 
-      const carouselDesktop = document.getElementById("carousel-desktop");
-      const captionContainerDesktop =
-        document.getElementById("caption-desktop");
+  <script>
+    // Código JavaScript para el carousel de escritorio/tablet
+    const projectsDesktop = [
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-1/",
+        project: "STREET SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "01/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-2/",
+        project: "ARTRAPE RÊVES 2024",
+        client: "LOUIS VUITTON",
+        productServices: "HOLIDAYS PRODUCTION",
+        num: "02/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-3/",
+        project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "03/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-4/",
+        project: "COR",
+        client: "",
+        productServices: "LA BELLE FAÇON",
+        num: "04/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-5/",
+        project: "ZARA WOMAN AUSTRALIA",
+        client: "ZARA WOMAN",
+        productServices: "NORTH SIX",
+        num: "05/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-6/",
+        project: "SUMMER CAMPAING 2024",
+        client: "SHOPBOB",
+        productServices: "NORTH SIX",
+        num: "06/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-7/",
+        project: "ZARA MAN X CASA JOSEPHINE",
+        client: "ZARA",
+        productServices: "NORTH SIX",
+        num: "07/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-8/",
+        project: "CORE SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "08/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-9/",
+        project: "DESIGNER SPRING CAMPAING 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "09/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-10/",
+        project: "DESTINATIONS SUMMER 2024",
+        client: "HARVEY NICHOLS",
+        productServices: "8AM MANAGEMENT",
+        num: "10/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-11/",
+        project: "FALL-WINTER 2024",
+        client: "ISABEL MARANT",
+        productServices: "HOLIDAYS",
+        num: "11/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-12/",
+        project: "Audi QR-S8",
+        client: "AUDI",
+        productServices: "FALCA",
+        num: "12/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-1/",
+        project: "STREET SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "01/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-2/",
+        project: "ARTRAPE RÊVES 2024",
+        client: "LOUIS VUITTON",
+        productServices: "HOLIDAYS PRODUCTION",
+        num: "02/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-3/",
+        project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "03/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-4/",
+        project: "COR",
+        client: "",
+        productServices: "LA BELLE FAÇON",
+        num: "04/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-5/",
+        project: "ZARA WOMAN AUSTRALIA",
+        client: "ZARA WOMAN",
+        productServices: "NORTH SIX",
+        num: "05/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-6/",
+        project: "SUMMER CAMPAING 2024",
+        client: "SHOPBOB",
+        productServices: "NORTH SIX",
+        num: "06/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-7/",
+        project: "ZARA MAN X CASA JOSEPHINE",
+        client: "ZARA",
+        productServices: "NORTH SIX",
+        num: "07/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-8/",
+        project: "CORE SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "08/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-9/",
+        project: "DESIGNER SPRING CAMPAING 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "09/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-10/",
+        project: "DESTINATIONS SUMMER 2024",
+        client: "HARVEY NICHOLS",
+        productServices: "8AM MANAGEMENT",
+        num: "10/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-11/",
+        project: "FALL-WINTER 2024",
+        client: "ISABEL MARANT",
+        productServices: "HOLIDAYS",
+        num: "11/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-12/",
+        project: "Audi QR-S8",
+        client: "AUDI",
+        productServices: "FALCA",
+        num: "12/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-1/",
+        project: "STREET SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "01/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-2/",
+        project: "ARTRAPE RÊVES 2024",
+        client: "LOUIS VUITTON",
+        productServices: "HOLIDAYS PRODUCTION",
+        num: "02/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-3/",
+        project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "03/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-4/",
+        project: "COR",
+        client: "",
+        productServices: "LA BELLE FAÇON",
+        num: "04/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-5/",
+        project: "ZARA WOMAN AUSTRALIA",
+        client: "ZARA WOMAN",
+        productServices: "NORTH SIX",
+        num: "05/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-6/",
+        project: "SUMMER CAMPAING 2024",
+        client: "SHOPBOB",
+        productServices: "NORTH SIX",
+        num: "06/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-7/",
+        project: "ZARA MAN X CASA JOSEPHINE",
+        client: "ZARA",
+        productServices: "NORTH SIX",
+        num: "07/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-8/",
+        project: "CORE SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "08/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-9/",
+        project: "DESIGNER SPRING CAMPAING 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "09/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-10/",
+        project: "DESTINATIONS SUMMER 2024",
+        client: "HARVEY NICHOLS",
+        productServices: "8AM MANAGEMENT",
+        num: "10/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-11/",
+        project: "FALL-WINTER 2024",
+        client: "ISABEL MARANT",
+        productServices: "HOLIDAYS",
+        num: "11/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-12/",
+        project: "Audi QR-S8",
+        client: "AUDI",
+        productServices: "FALCA",
+        num: "12/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-1/",
+        project: "STREET SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "01/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-2/",
+        project: "ARTRAPE RÊVES 2024",
+        client: "LOUIS VUITTON",
+        productServices: "HOLIDAYS PRODUCTION",
+        num: "02/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-3/",
+        project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "03/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-4/",
+        project: "COR",
+        client: "",
+        productServices: "LA BELLE FAÇON",
+        num: "04/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-5/",
+        project: "ZARA WOMAN AUSTRALIA",
+        client: "ZARA WOMAN",
+        productServices: "NORTH SIX",
+        num: "05/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-6/",
+        project: "SUMMER CAMPAING 2024",
+        client: "SHOPBOB",
+        productServices: "NORTH SIX",
+        num: "06/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-7/",
+        project: "ZARA MAN X CASA JOSEPHINE",
+        client: "ZARA",
+        productServices: "NORTH SIX",
+        num: "07/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-8/",
+        project: "CORE SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "08/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-9/",
+        project: "DESIGNER SPRING CAMPAING 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "09/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-10/",
+        project: "DESTINATIONS SUMMER 2024",
+        client: "HARVEY NICHOLS",
+        productServices: "8AM MANAGEMENT",
+        num: "10/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-11/",
+        project: "FALL-WINTER 2024",
+        client: "ISABEL MARANT",
+        productServices: "HOLIDAYS",
+        num: "11/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-12/",
+        project: "Audi QR-S8",
+        client: "AUDI",
+        productServices: "FALCA",
+        num: "12/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-1/",
+        project: "STREET SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "01/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Louis-Vuitton_Video_Project.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-2/",
+        project: "ARTRAPE RÊVES 2024",
+        client: "LOUIS VUITTON",
+        productServices: "HOLIDAYS PRODUCTION",
+        num: "02/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPZalandoModifiedVideo.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-3/",
+        project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "03/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/HomeDesktopModified.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-4/",
+        project: "COR",
+        client: "",
+        productServices: "LA BELLE FAÇON",
+        num: "04/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Project-5-Foto.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-5/",
+        project: "ZARA WOMAN AUSTRALIA",
+        client: "ZARA WOMAN",
+        productServices: "NORTH SIX",
+        num: "05/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-6/",
+        project: "SUMMER CAMPAING 2024",
+        client: "SHOPBOB",
+        productServices: "NORTH SIX",
+        num: "06/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-7/",
+        project: "ZARA MAN X CASA JOSEPHINE",
+        client: "ZARA",
+        productServices: "NORTH SIX",
+        num: "07/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-8/",
+        project: "CORE SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "08/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-9/",
+        project: "DESIGNER SPRING CAMPAING 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        num: "09/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WildPRonanVideoModifiedP102nd.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-10/",
+        project: "DESTINATIONS SUMMER 2024",
+        client: "HARVEY NICHOLS",
+        productServices: "8AM MANAGEMENT",
+        num: "10/12",
+      },
+      {
+        video:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Project_Isabel-Marant_Home.mp4",
+        url: "https://www.wildpictures.xyz/proyecto/project-11/",
+        project: "FALL-WINTER 2024",
+        client: "ISABEL MARANT",
+        productServices: "HOLIDAYS",
+        num: "11/12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/carouseldesktopP12.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-12/",
+        project: "Audi QR-S8",
+        client: "AUDI",
+        productServices: "FALCA",
+        num: "12/12",
+      },
+    ];
 
-      let currentIndexDesktop = Math.floor(
-        Math.random() * projectsDesktop.length
+    const carouselDesktop = document.getElementById("carousel-desktop");
+    const captionContainerDesktop =
+      document.getElementById("caption-desktop");
+
+    let currentIndexDesktop = Math.floor(
+      Math.random() * projectsDesktop.length
+    );
+
+    // Create and append all carousel items
+    projectsDesktop.forEach((project, index) => {
+      const div = createCarouselItemDesktop(project, index);
+      carouselDesktop.appendChild(div);
+    });
+
+      /*Detect OSystem*/
+      function getMobileOS() {
+        const userAgent =
+          navigator.userAgent || navigator.vendor || window.opera;
+
+        // Detectar iOS
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          return "iOS";
+        }
+
+        // Si no es iOS
+        return "unknown";
+      }
+
+      const mobileOSystem = getMobileOS();
+      if (mobileOSystem === "iOS") {
+        document.body.classList.add("iosss");
+        console.log("IOSSS detected");
+      }else{console.log("NO detected  ios");}
+    /*SEGMENTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO*/
+    function createCarouselItemDesktop(project, index) {
+      const div = document.createElement("div");
+      div.className = "carousel-item-desktop";
+      div.dataset.index = index; // Añadido para referenciar fácilmente el índice
+
+      const link = document.createElement("a");
+      link.href = project.url;
+      link.target = "_blank";
+
+      if (project.video) {
+        const videoUrl = document.createElement("video");
+        videoUrl.src = project.video;
+        videoUrl.muted = true;
+        // videoUrl.allow =
+        //   "autoplay; fullscreen; picture-in-picture; clipboard-write";
+        videoUrl.loop = true;
+        videoUrl.style.width = "100%";
+        videoUrl.style.height = "100%";
+        videoUrl.controls = true; // Inicialmente los controles están habilitados
+        videoUrl.addEventListener("mouseover", () => {
+          videoUrl.pause(); // Pausa el video al hacer hover
+        });
+
+        videoUrl.addEventListener("mouseout", () => {
+          videoUrl.play(); // Reanuda el video al salir del hover
+        });
+        // Añadir el video a la referencia del div
+        div.videoUrl = videoUrl;
+        link.appendChild(videoUrl);
+      } else {
+        const img = document.createElement("img");
+        img.src = project.image;
+        link.appendChild(img);
+      }
+
+      div.appendChild(link);
+      return div;
+    }
+
+    function updateCaptionDesktop(project, index) {
+      captionContainerDesktop.innerHTML = `${project.project} <span class="with-section">WITH</span> ${project.client} <span class="services-section">X</span> ${project.productServices} <span class="index-section">${project.num}</span>`;
+    }
+
+    function updateCarouselDesktop() {
+      const items = document.querySelectorAll(".carousel-item-desktop");
+      const totalItems = items.length;
+
+      // Primero, restablecer todos los elementos a inactivos
+      items.forEach((item) => {
+        item.classList.remove("active");
+        item.classList.remove("inactive");
+        item.classList.add("hidden-desktop");
+        item.style.height = "var(--inactive-height)";
+
+        // Pausar el video si existe
+        if (item.videoUrl) {
+          item.videoUrl.muted = true;
+          item.videoUrl.controls = false; // Deshabilitar controles para inactivos
+          item.videoUrl.pause();
+          item.videoUrl.currentTime = 0; // Opcional: Reinicia el video
+
+        }
+      });
+
+      // Obtener índices de los elementos circundantes inactivos
+      const prevIndex1 = (currentIndexDesktop - 2 + totalItems) % totalItems;
+      const prevIndex2 = (currentIndexDesktop - 1 + totalItems) % totalItems;
+      const nextIndex1 = (currentIndexDesktop + 1) % totalItems;
+      const nextIndex2 = (currentIndexDesktop + 2) % totalItems;
+
+      // Establecer el elemento activo
+      const activeItem = items[currentIndexDesktop];
+      activeItem.classList.remove("hidden-desktop");
+      activeItem.classList.add("active");
+      activeItem.style.height = "var(--active-height)";
+
+     // Reproducir el video si no es iOS
+  if (activeItem.videoUrl && mobileOSystem !== "iOS") {
+    activeItem.videoUrl.play();
+    activeItem.videoUrl.controls = true;
+  }
+
+
+      // Establecer los elementos inactivos arriba y abajo del activo
+      items[prevIndex1].classList.remove("hidden-desktop");
+      items[prevIndex1].classList.add("inactive");
+
+      items[prevIndex2].classList.remove("hidden-desktop");
+      items[prevIndex2].classList.add("inactive");
+
+      items[nextIndex1].classList.remove("hidden-desktop");
+      items[nextIndex1].classList.add("inactive");
+
+      items[nextIndex2].classList.remove("hidden-desktop");
+      items[nextIndex2].classList.add("inactive");
+
+      // Actualizar el título
+      updateCaptionDesktop(
+        projectsDesktop[currentIndexDesktop],
+        currentIndexDesktop
+      );
+    }
+    /*SEGMENTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO*/
+    function moveCarouselUpDesktop() {
+      const items = document.querySelectorAll(".carousel-item-desktop");
+      carouselDesktop.style.transition =
+        "transform var(--transition-duration) ease";
+      currentIndexDesktop = (currentIndexDesktop + 1) % items.length;
+      updateCarouselDesktop();
+    }
+
+    function moveCarouselDesktop() {
+      const items = document.querySelectorAll(".carousel-item-desktop");
+      carouselDesktop.style.transition =
+        "transform var(--transition-duration) ease";
+      currentIndexDesktop =
+        (currentIndexDesktop - 1 + items.length) % items.length;
+      updateCarouselDesktop();
+    }
+
+    function startCarouselDesktop() {
+      intervalIdDesktop = setInterval(moveCarouselUpDesktop, 3000);
+    }
+
+    function stopCarouselDesktop() {
+      clearInterval(intervalIdDesktop);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateCarouselDesktop();
+      startCarouselDesktop(); // Start the carousel when the page loads
+
+      const carouselItems = document.querySelectorAll(
+        ".carousel-item-desktop"
       );
 
-      // Create and append all carousel items
-      projectsDesktop.forEach((project, index) => {
-        const div = createCarouselItemDesktop(project, index);
-        carouselDesktop.appendChild(div);
+      carouselItems.forEach((item) => {
+        item.addEventListener("mouseover", () => {
+          stopCarouselDesktop(); // Pause the carousel on hover
+        });
+
+        item.addEventListener("mouseout", () => {
+          startCarouselDesktop(); // Resume the carousel when mouse leaves
+        });
       });
-/*SEGMENTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO*/
-function createCarouselItemDesktop(project, index) {
-        const div = document.createElement("div");
-        div.className = "carousel-item-desktop";
-        div.dataset.index = index; // Añadido para referenciar fácilmente el índice
 
-        const link = document.createElement("a");
-        link.href = project.url;
-        link.target = "_blank";
+      const bodyElement = document.body;
 
-        if (project.video) {
-          const videoUrl = document.createElement("video");
-          videoUrl.src = project.video;
-          videoUrl.muted = true;
-          videoUrl.allow =
-            "autoplay; fullscreen; picture-in-picture; clipboard-write";
-          videoUrl.loop = true;
-          videoUrl.style.width = "100%";
-          videoUrl.style.height = "100%";
-          videoUrl.controls = true; // Inicialmente los controles están habilitados
+      bodyElement.addEventListener("click", () => {
+        moveCarouselUpDesktop();
+      });
 
-          // Añadir el video a la referencia del div
-          div.videoUrl = videoUrl;
-          link.appendChild(videoUrl);
-        } else {
-          const img = document.createElement("img");
-          img.src = project.image;
-          link.appendChild(img);
-        }
-
-        div.appendChild(link);
-        return div;
-      }
-
-      function updateCaptionDesktop(project, index) {
-        captionContainerDesktop.innerHTML = `${project.project} <span class="with-section">WITH</span> ${project.client} <span class="services-section">X</span> ${project.productServices} <span class="index-section">${project.num}</span>`;
-      }
-
-      function updateCarouselDesktop() {
-        const items = document.querySelectorAll(".carousel-item-desktop");
-        const totalItems = items.length;
-
-        // Primero, restablecer todos los elementos a inactivos
-        items.forEach((item) => {
-          item.classList.remove("active");
-          item.classList.remove("inactive");
-          item.classList.add("hidden-desktop");
-          item.style.height = "var(--inactive-height)";
-
-          // Pausar el video si existe
-          if (item.videoUrl) {
-             item.videoUrl.muted = true;
-            item.videoUrl.controls = false; // Deshabilitar controles para inactivos
-            item.videoUrl.pause();
-            item.videoUrl.currentTime = 0; // Opcional: Reinicia el video
-           
-          }
-        });
-
-        // Obtener índices de los elementos circundantes inactivos
-        const prevIndex1 = (currentIndexDesktop - 2 + totalItems) % totalItems;
-        const prevIndex2 = (currentIndexDesktop - 1 + totalItems) % totalItems;
-        const nextIndex1 = (currentIndexDesktop + 1) % totalItems;
-        const nextIndex2 = (currentIndexDesktop + 2) % totalItems;
-
-        // Establecer el elemento activo
-        const activeItem = items[currentIndexDesktop];
-        activeItem.classList.remove("hidden-desktop");
-        activeItem.classList.add("active");
-        activeItem.style.height = "var(--active-height)";
-
-        // Reproducir el video si existe
-        if (activeItem.videoUrl) {
-          activeItem.videoUrl.play();
-          activeItem.videoUrl.controls = true; // Habilitar controles para el activo
-        }
-
-        // Establecer los elementos inactivos arriba y abajo del activo
-        items[prevIndex1].classList.remove("hidden-desktop");
-        items[prevIndex1].classList.add("inactive");
-
-        items[prevIndex2].classList.remove("hidden-desktop");
-        items[prevIndex2].classList.add("inactive");
-
-        items[nextIndex1].classList.remove("hidden-desktop");
-        items[nextIndex1].classList.add("inactive");
-
-        items[nextIndex2].classList.remove("hidden-desktop");
-        items[nextIndex2].classList.add("inactive");
-
-        // Actualizar el título
-        updateCaptionDesktop(
-          projectsDesktop[currentIndexDesktop],
-          currentIndexDesktop
-        );
-      }
-/*SEGMENTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO*/
-      function moveCarouselUpDesktop() {
-        const items = document.querySelectorAll(".carousel-item-desktop");
-        carouselDesktop.style.transition =
-          "transform var(--transition-duration) ease";
-        currentIndexDesktop = (currentIndexDesktop + 1) % items.length;
-        updateCarouselDesktop();
-      }
-
-      function moveCarouselDesktop() {
-        const items = document.querySelectorAll(".carousel-item-desktop");
-        carouselDesktop.style.transition =
-          "transform var(--transition-duration) ease";
-        currentIndexDesktop =
-          (currentIndexDesktop - 1 + items.length) % items.length;
-        updateCarouselDesktop();
-      }
-
-      function startCarouselDesktop() {
-        intervalIdDesktop = setInterval(moveCarouselUpDesktop, 3000);
-      }
-
-      function stopCarouselDesktop() {
-        clearInterval(intervalIdDesktop);
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        updateCarouselDesktop();
-        startCarouselDesktop(); // Start the carousel when the page loads
-
-        const carouselItems = document.querySelectorAll(
-          ".carousel-item-desktop"
-        );
-
-        carouselItems.forEach((item) => {
-          item.addEventListener("mouseover", () => {
-            stopCarouselDesktop(); // Pause the carousel on hover
-          });
-
-          item.addEventListener("mouseout", () => {
-            startCarouselDesktop(); // Resume the carousel when mouse leaves
-          });
-        });
-
-        const bodyElement = document.body;
-
-        bodyElement.addEventListener("click", () => {
+      bodyElement.addEventListener("wheel", (event) => {
+        if (event.deltaY > 0) {
           moveCarouselUpDesktop();
-        });
-
-        bodyElement.addEventListener("wheel", (event) => {
-          if (event.deltaY > 0) {
-            moveCarouselUpDesktop();
-          } else {
-            moveCarouselDesktop();
-          }
-        });
-        let touchstartY = 0;
-        let touchendY = 0;
-
-        document.addEventListener("touchstart", (event) => {
-          touchstartY = event.changedTouches[0].screenY;
-        });
-
-        document.addEventListener("touchend", (event) => {
-          touchendY = event.changedTouches[0].screenY;
-          handleGesture();
-        });
-
-        function handleGesture() {
-          if (touchendY <= touchstartY) {
-            // Deslizamiento hacia arriba
-            moveCarouselUpDesktop();
-          } else {
-            moveCarouselDesktop(); // Deslizamiento hacia la abajo
-          }
+        } else {
+          moveCarouselDesktop();
         }
       });
+      let touchstartY = 0;
+      let touchendY = 0;
 
-      // Código JavaScript para el carousel móvil con scroll infinito
-      const mobileProjects = [
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Rectangle-155.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-1/",
-          project: "STREET SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          indexToPaint: "1 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p2-1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-2/",
-          project: "ARTRAPE RÊVES 2024",
-          client: "LOUIS VUITTON",
-          productServices: "HOLIDAYS PRODUCTION",
-          indexToPaint: "2 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p3-1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-3/",
-          project: "DESIGNER ZSUMMER CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          indexToPaint: "3 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p4-1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-4/",
-          project: "COR",
-          client: "",
-          productServices: "LA BELLE FAÇON",
-          indexToPaint: "4 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p5.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-5/",
-          project: "ZARA WOMAN AUSTRALIA",
-          client: "ZARA WOMAN",
-          productServices: "NORTH SIX",
-          indexToPaint: "5 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6-1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-6/",
-          project: "SUMMER CAMPAING 2024",
-          client: "SHOPBOB",
-          productServices: "NORTH SIX",
-          indexToPaint: "6 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7-1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-7/",
-          project: "ZARA MAN X CASA JOSEPHINE",
-          client: "ZARA",
-          productServices: "NORTH SIX",
-          indexToPaint: "7 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8-1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-8/",
-          project: "CORE SPRING CAMPAIGN 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          indexToPaint: "8 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9-1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-9/",
-          project: "DESIGNER SPRING CAMPAING 2024",
-          client: "ZALANDO",
-          productServices: "RAYO PRODUCTIONS",
-          indexToPaint: "9 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p10-1.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-10/",
-          project: "DESTINATIONS SUMMER 2024",
-          client: "HARVEY NICHOLS",
-          productServices: "8AM MANAGEMENT",
-          indexToPaint: "10 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Captura-de-pantalla-2024-05-27-a-las-13.03-1-8.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-11/",
-          project: "FALL-WINTER 2024",
-          client: "ISABEL MARANT",
-          productServices: "HOLIDAYS",
-          indexToPaint: "11 / 12",
-        },
-        {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Captura-de-pantalla-2024-05-27-a-las-13.03-17.png",
-          url: "https://www.wildpictures.xyz/proyecto/project-12/",
-          project: "Audi QR-S8",
-          client: "AUDI",
-          productServices: "FALCA",
-          indexToPaint: "12 / 12",
-        },
-      ];
+      document.addEventListener("touchstart", (event) => {
+        touchstartY = event.changedTouches[0].screenY;
+      });
 
+      document.addEventListener("touchend", (event) => {
+        touchendY = event.changedTouches[0].screenY;
+        handleGesture();
+      });
 
-
-      const mobileContainer = document.getElementById("carousel-mobile");
-
-      function createCarouselItems() {
-        mobileProjects.forEach((project, index) => {
-          let item = createCarouselItemMobile(project);
-          mobileContainer.appendChild(item);
-        });
-
-        mobileProjects.forEach((project) => {
-          let itemClone = createCarouselItemMobile(project);
-          mobileContainer.appendChild(itemClone);
-        });
+      function handleGesture() {
+        if (touchendY <= touchstartY) {
+          // Deslizamiento hacia arriba
+          moveCarouselUpDesktop();
+        } else {
+          moveCarouselDesktop(); // Deslizamiento hacia la abajo
+        }
       }
+    });
 
-      function createCarouselItemMobile(project) {
-        let item = document.createElement("a");
-        item.href = project.url;
-        item.target = "_blank";
-        item.className = "carousel-item-mobile";
-        item.style.backgroundImage = `url(${project.image})`;
+    // Código JavaScript para el carousel móvil con scroll infinito
+    const mobileProjects = [
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Rectangle-155.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-1/",
+        project: "STREET SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        indexToPaint: "1 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p2-1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-2/",
+        project: "ARTRAPE RÊVES 2024",
+        client: "LOUIS VUITTON",
+        productServices: "HOLIDAYS PRODUCTION",
+        indexToPaint: "2 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p3-1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-3/",
+        project: "DESIGNER ZSUMMER CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        indexToPaint: "3 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p4-1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-4/",
+        project: "COR",
+        client: "",
+        productServices: "LA BELLE FAÇON",
+        indexToPaint: "4 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p5.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-5/",
+        project: "ZARA WOMAN AUSTRALIA",
+        client: "ZARA WOMAN",
+        productServices: "NORTH SIX",
+        indexToPaint: "5 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p6-1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-6/",
+        project: "SUMMER CAMPAING 2024",
+        client: "SHOPBOB",
+        productServices: "NORTH SIX",
+        indexToPaint: "6 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p7-1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-7/",
+        project: "ZARA MAN X CASA JOSEPHINE",
+        client: "ZARA",
+        productServices: "NORTH SIX",
+        indexToPaint: "7 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p8-1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-8/",
+        project: "CORE SPRING CAMPAIGN 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        indexToPaint: "8 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p9-1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-9/",
+        project: "DESIGNER SPRING CAMPAING 2024",
+        client: "ZALANDO",
+        productServices: "RAYO PRODUCTIONS",
+        indexToPaint: "9 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p10-1.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-10/",
+        project: "DESTINATIONS SUMMER 2024",
+        client: "HARVEY NICHOLS",
+        productServices: "8AM MANAGEMENT",
+        indexToPaint: "10 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Captura-de-pantalla-2024-05-27-a-las-13.03-1-8.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-11/",
+        project: "FALL-WINTER 2024",
+        client: "ISABEL MARANT",
+        productServices: "HOLIDAYS",
+        indexToPaint: "11 / 12",
+      },
+      {
+        image:
+          "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Captura-de-pantalla-2024-05-27-a-las-13.03-17.png",
+        url: "https://www.wildpictures.xyz/proyecto/project-12/",
+        project: "Audi QR-S8",
+        client: "AUDI",
+        productServices: "FALCA",
+        indexToPaint: "12 / 12",
+      },
+    ];
 
-        let content = document.createElement("div");
-        content.className = "carousel-item-content-mobile";
 
-        let title = document.createElement("div");
-        title.className = "carousel-item-title-mobile";
-        title.textContent = project.project.toUpperCase();
-        content.appendChild(title);
 
-        let indexInfo = document.createElement("div");
-        indexInfo.className = "carousel-item-index-mobile";
-        indexInfo.textContent = project.indexToPaint;
-        content.appendChild(indexInfo);
+    const mobileContainer = document.getElementById("carousel-mobile");
 
-        item.appendChild(content);
+    function createCarouselItems() {
+      mobileProjects.forEach((project, index) => {
+        let item = createCarouselItemMobile(project);
+        mobileContainer.appendChild(item);
+      });
 
-        let bottomContent = document.createElement("div");
-        bottomContent.className = "carousel-item-bottom-mobile";
+      mobileProjects.forEach((project) => {
+        let itemClone = createCarouselItemMobile(project);
+        mobileContainer.appendChild(itemClone);
+      });
+    }
 
-        let section1 = document.createElement("div");
-        section1.className = "section-mobile";
-        let withText = document.createElement("div");
-        withText.textContent = "WITH";
-        let productServicesInfo = document.createElement("div");
-        productServicesInfo.className = "carousel-item-product-services-mobile";
-        productServicesInfo.textContent = project.productServices;
-        section1.appendChild(withText);
-        section1.appendChild(productServicesInfo);
+    function createCarouselItemMobile(project) {
+      let item = document.createElement("a");
+      item.href = project.url;
+      item.target = "_blank";
+      item.className = "carousel-item-mobile";
+      item.style.backgroundImage = `url(${project.image})`;
 
-        let section2 = document.createElement("div");
-        section2.className = "section-mobile";
-        let xText = document.createElement("div");
-        xText.textContent = "X";
-        let clientInfo = document.createElement("div");
-        clientInfo.className = "carousel-item-client-mobile";
-        clientInfo.textContent = project.client;
-        section2.appendChild(xText);
-        section2.appendChild(clientInfo);
+      let content = document.createElement("div");
+      content.className = "carousel-item-content-mobile";
 
-        bottomContent.appendChild(section1);
-        bottomContent.appendChild(section2);
+      let title = document.createElement("div");
+      title.className = "carousel-item-title-mobile";
+      title.textContent = project.project.toUpperCase();
+      content.appendChild(title);
 
-        item.appendChild(bottomContent);
-        return item;
-      }
+      let indexInfo = document.createElement("div");
+      indexInfo.className = "carousel-item-index-mobile";
+      indexInfo.textContent = project.indexToPaint;
+      content.appendChild(indexInfo);
 
-      createCarouselItems();
+      item.appendChild(content);
+
+      let bottomContent = document.createElement("div");
+      bottomContent.className = "carousel-item-bottom-mobile";
+
+      let section1 = document.createElement("div");
+      section1.className = "section-mobile";
+      let withText = document.createElement("div");
+      withText.textContent = "WITH";
+      let productServicesInfo = document.createElement("div");
+      productServicesInfo.className = "carousel-item-product-services-mobile";
+      productServicesInfo.textContent = project.productServices;
+      section1.appendChild(withText);
+      section1.appendChild(productServicesInfo);
+
+      let section2 = document.createElement("div");
+      section2.className = "section-mobile";
+      let xText = document.createElement("div");
+      xText.textContent = "X";
+      let clientInfo = document.createElement("div");
+      clientInfo.className = "carousel-item-client-mobile";
+      clientInfo.textContent = project.client;
+      section2.appendChild(xText);
+      section2.appendChild(clientInfo);
+
+      bottomContent.appendChild(section1);
+      bottomContent.appendChild(section2);
+
+      item.appendChild(bottomContent);
+      return item;
+    }
+
+    createCarouselItems();
 
     // Adjust scroll to loop in both directions
     mobileContainer.addEventListener("scroll", () => {
-        const maxScrollTop =
-          mobileContainer.scrollHeight - mobileContainer.clientHeight;
+      const maxScrollTop =
+        mobileContainer.scrollHeight - mobileContainer.clientHeight;
 
-        if (mobileContainer.scrollTop <= 1) {
-          mobileContainer.scrollTop = maxScrollTop / 2; // Loop to the middle
-        }
-
-        if (mobileContainer.scrollTop >= maxScrollTop) {
-          mobileContainer.scrollTop = maxScrollTop / 2; // Loop to the middle
-        }
-      });
-
-      // Function to scroll by one project at a time
-      function scrollOneProject() {
-        // Get the height of one project (assuming they all have the same height)
-        const projectHeight = mobileContainer.firstElementChild.offsetHeight;
-
-        // Calculate the next scroll position
-        const nextScrollTop = mobileContainer.scrollTop + projectHeight;
-
-        // Smoothly scroll to the next position
-        mobileContainer.scrollTo({
-          top: nextScrollTop,
-          behavior: "smooth", // Smooth scrolling
-        });
+      if (mobileContainer.scrollTop <= 1) {
+        mobileContainer.scrollTop = maxScrollTop / 2; // Loop to the middle
       }
 
-      // Automatically scroll by one project every 3 seconds
-      setInterval(scrollOneProject, 3000);
+      if (mobileContainer.scrollTop >= maxScrollTop) {
+        mobileContainer.scrollTop = maxScrollTop / 2; // Loop to the middle
+      }
+    });
 
-      // Initially, scroll to the middle to start the loop
-      mobileContainer.scrollTop = mobileContainer.scrollHeight / 2;
-    </script>
-  </body>
+    // Function to scroll by one project at a time
+    function scrollOneProject() {
+      // Get the height of one project (assuming they all have the same height)
+      const projectHeight = mobileContainer.firstElementChild.offsetHeight;
+
+      // Calculate the next scroll position
+      const nextScrollTop = mobileContainer.scrollTop + projectHeight;
+
+      // Smoothly scroll to the next position
+      mobileContainer.scrollTo({
+        top: nextScrollTop,
+        behavior: "smooth", // Smooth scrolling
+      });
+    }
+
+    // Automatically scroll by one project every 3 seconds
+    setInterval(scrollOneProject, 3000);
+
+    // Initially, scroll to the middle to start the loop
+    mobileContainer.scrollTop = mobileContainer.scrollHeight / 2;
+
+  
+  </script>
+</body>
+
 </html>
