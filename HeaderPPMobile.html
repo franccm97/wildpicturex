@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile Navigation</title>
+    <!-- Enlace a Google Fonts para la fuente Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      /* Contenedor principal del header móvil */
+      .nav-movil-contenedor {
+        position: sticky;
+        top: 1;
+        flex-direction: column;
+        align-items: center;
+        background-color: transparent!important;
+  padding:20px;
+  		
+      }
+
+      .nav-movil-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .activador-menu {
+        width: 30px;
+        height: 20px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        cursor: pointer;
+        margin-bottom:20px;
+      }
+
+      .linea-menu {
+        height: 2px;
+        background-color: black; /* Todas las líneas del menú son negras */
+        transition: all 0.3s;
+      }
+
+      .activador-menu.open .linea-menu:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+        background-color: black;
+      }
+
+      .activador-menu.open .linea-menu:nth-child(2) {
+        opacity: 0;
+      }
+
+      .activador-menu.open .linea-menu:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+        background-color: black;
+      }
+
+      /* Logo del header móvil */
+      .contenedor-logo-movil {
+        display: flex;
+        justify-content: center;
+      }
+
+      .logo-movil img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Estilos del popup */
+      .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        padding: 20px;
+        z-index: 1000;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+      }
+
+      .popup-overlay.show {
+        display: flex;
+      }
+
+      .enlaces-popup {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        color: black;
+        font-size: 13px;
+        text-align: center;
+      }
+
+      .enlaces-popup a {
+        color: black;
+        margin: 20px 0;
+        text-decoration: none;
+      }
+
+      /* Estilos del formulario dentro del popup */
+      .popup-formulario {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .popup-formulario label {
+        color: black;
+        margin-bottom: 10px;
+        font-size: 13px;
+        font-weight: 500;
+        font-family: "Inter", sans-serif;
+      }
+
+      .contenedor-input-form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .input-area {
+        flex: 1;
+      }
+input.input-personalizado{
+  padding:0px !important;
+}
+
+input{
+  outline:none !important;
+  border-bottom: 1px solid black !important;
+  border-top:none !important;
+  border-left:none !important;
+  border-right:none !important;
+  border-radius:none !important;
+  
+}
+      .input-personalizado {
+        width: 100%;
+        border-bottom:1px solid black !important;
+        font-size: 13px;
+        color: black;
+        outline: none !important;
+        box-sizing: border-box;
+        border-radius:none !important;
+        padding:none !important;
+      }
+
+      .input-personalizado::placeholder {
+        color: #bbb;
+        text-align: left;
+        font-size:13px
+      }
+
+      .contenedor-boton {
+        flex-shrink: 0;
+      }
+
+      .boton-envio-personalizado {
+        cursor: pointer;
+        font-size: 13px;
+        color: black;
+        background-color: white;
+        border-radius: none;
+        border: none;
+        font-weight: 500;
+        font-family: "Inter", sans-serif;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <!-- Header móvil -->
+    <div class="nav-movil-contenedor">
+      <div class="nav-movil-header">
+        <div class="activador-menu" id="activadorMenu">
+          <div class="linea-menu"></div>
+          <div class="linea-menu"></div>
+          <div class="linea-menu"></div>
+        </div>
+        <div class="contenedor-logo-movil" id="contenedorLogoMovil">
+      <a href="https://www.wildpictures.xyz/home">
+                <img
+            src="http://www.wildpictures.xyz/wp-content/uploads/2024/09/Logo-2-1.svg"
+            alt="Logo"
+            class="logo-movil"
+          />
+      </a>
+
+        </div>
+      </div>
+
+      <!-- Popup que cubre toda la pantalla -->
+      <div class="popup-overlay" id="popupOverlay">
+        <div class="activador-menu open" id="activadorMenuPopup">
+          <div class="linea-menu"></div>
+          <div class="linea-menu"></div>
+          <div class="linea-menu"></div>
+        </div>
+
+        <!-- Enlaces dentro del popup -->
+        <div class="enlaces-popup">
+          <a href="https://www.wildpictures.xyz/about/">ABOUT</a>
+          <a href="mailto:info@wildpictures.xyz">CONTACT</a>
+        </div>
+
+        <!-- Formulario dentro del popup -->
+        <div class="popup-formulario">
+          <label>Subscribe to our newsletter:</label>
+          <div class="contenedor-input-form">
+            <div class="input-area">
+              <input type="text" class="input-personalizado" placeholder="Sign Up" />
+            </div>
+            <div class="contenedor-boton">
+              <button type="submit" class="boton-envio-personalizado">SUBMIT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const activadorMenu = document.getElementById("activadorMenu");
+        const popupOverlay = document.getElementById("popupOverlay");
+        const activadorMenuPopup = document.getElementById("activadorMenuPopup");
+        const contenedorLogoMovil = document.getElementById("contenedorLogoMovil");
+
+        activadorMenu.addEventListener("click", function () {
+          activadorMenu.classList.add("open");
+          setTimeout(() => {
+            popupOverlay.classList.add("show");
+            contenedorLogoMovil.style.display = "none";
+            activadorMenu.style.display = "none";
+            activadorMenuPopup.style.display = "flex";
+          }, 300);
+        });
+
+        activadorMenuPopup.addEventListener("click", function () {
+          popupOverlay.classList.remove("show");
+          activadorMenuPopup.style.display = "none";
+          contenedorLogoMovil.style.display = "flex";
+          activadorMenu.style.display = "flex";
+          setTimeout(() => {
+            activadorMenu.classList.remove("open");
+          }, 10);
+        });
+      });
+    </script>
+  </body>
+</html>
