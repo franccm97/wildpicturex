@@ -173,7 +173,7 @@
         font-weight: 500;
         font-size: 14px;
         color: white;
-        padding-left:10px;
+        padding-left: 10px;
         padding-right: 10px;
       }
 
@@ -342,6 +342,7 @@
           width: 60%;
         }
       }
+
     </style>
   </head>
 
@@ -955,24 +956,27 @@
 
         const link = document.createElement("a");
         link.href = project.url;
-        link.target = "_blank";
+        // link.target = "_blank";
 
         if (project.video) {
           const videoUrl = document.createElement("video");
           videoUrl.src = project.video;
           videoUrl.muted = true;
+          ///changed
+          videoUrl.setAttribute("playsinline", "");
           // videoUrl.allow =
           //   "autoplay; fullscreen; picture-in-picture; clipboard-write";
           videoUrl.loop = true;
           videoUrl.style.width = "100%";
           videoUrl.style.height = "100%";
-          videoUrl.controls = true; // Inicialmente los controles están habilitados
+          videoUrl.controls = false; // Inicialmente los controles están habilitados
           videoUrl.addEventListener("mouseover", () => {
             videoUrl.pause(); // Pausa el video al hacer hover
           });
 
           videoUrl.addEventListener("mouseout", () => {
             videoUrl.play(); // Reanuda el video al salir del hover
+            videoUrl.controls = false;
           });
           // Añadir el video a la referencia del div
           div.videoUrl = videoUrl;
@@ -1023,8 +1027,8 @@
         activeItem.classList.add("active");
         activeItem.style.height = "var(--active-height)";
 
-        // Reproducir el video si no es iOS
-        if (activeItem.videoUrl && mobileOSystem !== "iOS") {
+        // Reproducir el video si no es iOS->  && mobileOSystem !== "iOS"
+        if (activeItem.videoUrl) {
           activeItem.videoUrl.play();
           activeItem.videoUrl.controls = true;
         }
@@ -1126,7 +1130,7 @@
           }
         }
       });
-
+      ///changed
       // Código JavaScript para el carousel móvil con scroll infinito
       const mobileProjects = [
         {
@@ -1139,8 +1143,8 @@
           indexToPaint: "1 / 12",
         },
         {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p2-1.png",
+          video:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Wild-Pictures_Website_Luis-Vuitton_Home_Mobile.mp4",
           url: "https://www.wildpictures.xyz/proyecto/project-2/",
           project: "ARTRAPE RÊVES 2024",
           client: "LOUIS VUITTON",
@@ -1157,8 +1161,8 @@
           indexToPaint: "3 / 12",
         },
         {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/p4-1.png",
+          video:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/P4Video-Mobile.mp4",
           url: "https://www.wildpictures.xyz/proyecto/project-4/",
           project: "COR",
           client: "",
@@ -1220,8 +1224,8 @@
           indexToPaint: "10 / 12",
         },
         {
-          image:
-            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/Captura-de-pantalla-2024-05-27-a-las-13.03-1-8.png",
+          video:
+            "http://www.wildpictures.xyz/wp-content/uploads/2024/09/WPMobileP-Isabel-Marant-Mobile.mp4",
           url: "https://www.wildpictures.xyz/proyecto/project-11/",
           project: "FALL-WINTER 2024",
           client: "ISABEL MARANT",
@@ -1256,15 +1260,35 @@
           mobileContainer.appendChild(itemClone);
         });
       }
+    function createCarouselItemMobile(project) {
+      let item = document.createElement("a");
+      item.href = project.url;
 
-      function createCarouselItemMobile(project) {
-        let item = document.createElement("a");
-        item.href = project.url;
-        item.target = "_blank";
-        item.className = "carousel-item-mobile";
-        item.style.backgroundImage = `url(${project.image})`;
-        return item;
+
+      // Si el proyecto tiene un video, lo reproducimos
+      if (project.video) {
+        let videoElement = document.createElement("video");
+        videoElement.setAttribute("playsinline", "");
+        videoElement.src = project.video;
+        videoElement.muted = true;
+        videoElement.autoplay = true;
+        videoElement.controls = false;
+        videoElement.loop = true;
+        videoElement.style.width = "100%";
+        videoElement.style.height = "100%";
+        videoElement.style.objectFit = "cover"; // Para que el video ocupe el mismo espacio que la imagen
+        videoElement.className = "carousel-item-mobile";
+        item.appendChild(videoElement);
       }
+      // Si el proyecto no tiene video, mostramos la imagen
+      else if (project.image) {
+        item.style.backgroundImage = url('${project.image}');
+        item.style.backgroundSize = "cover";
+        item.style.backgroundPosition = "center";
+        item.className = "carousel-item-mobile";
+      }
+      return item;
+    }
 
       function createAttributesSticky(project) {
         let itemContent = document.createElement("div");

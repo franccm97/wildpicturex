@@ -1,224 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Header Project Page</title>
-  </head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Header Project Page</title>
+  <!-- Enlace a Google Fonts para la fuente Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+
+</head>
+
+<body>
+  <!-- Header Desktop -->
+  <header class="header-desktop">
+    <div class="links">
+      <div class="about-contact">
+        <a href="https://www.wildpictures.xyz/about/" class="margin-about">ABOUT</a>
+        <a href="mailto:info@wildpictures.xyz">CONTACT</a>
+      </div>
+      <div class="close">
+        <a href="https://www.wildpictures.xyz/home">CLOSE</a>
+      </div>
+    </div>
+    <div class="logo-container">
+      <a href="https://www.wildpictures.xyz/home">
+        <img src="http://www.wildpictures.xyz/wp-content/uploads/2024/09/Logo-Desktop.svg" alt="Logo" class="logo" />
+      </a>
+    </div>
+  </header>
+
   <style>
-    body {
-        background-color: black;
-        mix-blend-mode: difference;
-    }
+    /* Estilos del header para Desktop */
     .header-desktop {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: sticky;
       top: 0;
-
+      z-index: 30;
+  padding-top:20px;
+  padding-bottom:20px
     }
-    
+
     .links {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 1.375rem;
+      margin:0 !important
     }
-    
-    .about-contact a, .close a {
-      color: black;
-      font-size: 16px;
-      margin: 0 10px;
+
+    .margin-about {
+      margin-right: 40px;
+    }
+
+    .about-contact a,
+    .close a {
+      color: white;
+      font-size: 14px;
+      font-weight: 400;
       text-decoration: none;
-      /* mix-blend-mode: difference; */
     }
-    
-    .logo {
+
+    .about-contact a:hover {
+      filter: blur(1.2px);
+    }
+
+    .close a:hover {
+      filter: blur(1.2px);
+    }
+
+
+    .logo-container {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
     }
-    
+
     .logo img {
       max-width: 100%;
       height: auto;
-      
     }
-    
-    /* .div-header-mobile {
-      display: none;
-      position: sticky;
-      top: 0;
-      mix-blend-mode: difference;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      background-color: transparent;
-    } */
-    
-    /* @media only screen and (max-width: 600px) {
-      .header-desktop {
-        display: none;
-      }
-    
-      .div-header-mobile {
-        display: flex;
-      }
-    
-      .header-mobile {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-    
-      .menu-activador {
-        width: 30px;
-        height: 20px;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        cursor: pointer;
-        padding: 20px;
-      }
-    
-      .menu-activador-linea {
-        height: 2px;
-        background-color: white;
-        transition: all 0.3s;
-      }
-    
-      .menu-activador.open .menu-activador-linea:nth-child(1) {
-        transform: translateY(9px) rotate(45deg);
-      }
-    
-      .menu-activador.open .menu-activador-linea:nth-child(2) {
-        opacity: 0;
-      }
-    
-      .menu-activador.open .menu-activador-linea:nth-child(3) {
-        transform: translateY(-9px) rotate(-45deg);
-      }
-    
-      .pop-up {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: black;
-        padding: 20px;
-        z-index: 1000;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-      }
-    
-      .pop-up.show {
-        display: flex;
-      }
-    
-      .pop-up a, .pop-up p {
-        font-size: 13px;
-        color: black;
-      }
-    
-      .input-pop-up {
-        display: flex;
-      }
-    
-      .input-pop-up input {
-        flex: 1;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px 0 0 4px;
-      }
-    
-      .input-pop-up button {
-        padding: 8px 12px;
-        border: 1px solid #ccc;
-        background-color: black;
-        color: white;
-        cursor: pointer;
-        border-radius: 0 4px 4px 0;
-      }
-    
-      .input-pop-up button:hover {
-        background-color: #333;
-      }
-    } */
-    
-    </style>
-  <body>
-    <div class="header-desktop">
-      <div class="links">
-        <div class="about-contact">
-          <a href="#">ABOUT</a>
-          <a href="#">CONTACT</a>
-        </div>
-        <div class="close">
-          <a href="#">CLOSE</a>
-        </div>
-      </div>
-      <div class="logo">
-        <img src="https://francc7.sg-host.com/wp-content/uploads/2024/08/Logo-Desktop-2.png" alt="Logo" />
-      </div>
-    </div>
-
-    <div class="div-header-mobile">
-      <div class="header-mobile">
-        <div class="menu-activador" id="menuActivador">
-          <div class="menu-activador-linea"></div>
-          <div class="menu-activador-linea"></div>
-          <div class="menu-activador-linea"></div>
-        </div>
-        <div class="logo">
-          <img src="https://francc7.sg-host.com/wp-content/uploads/2024/09/LogoSVGmobile.svg" alt="Logo" />
-        </div>
-      </div>
-
-      <div class="pop-up" id="popup">
-        <div class="menu-activador open" id="menuActivadorInPopup">
-          <div class="menu-activador-linea"></div>
-          <div class="menu-activador-linea"></div>
-          <div class="menu-activador-linea"></div>
-        </div>
-        <div class="links">
-          <a href="#">ABOUT</a>
-          <a href="mailto:info@wildpictures.xyz">CONTACT</a>
-        </div>
-
-        <div class="input-pop-up">
-          <input type="text" placeholder="Sign Up" />
-          <button>SUBMIT</button>
-        </div>
-      </div>
-    </div>
-  </body>
+  </style>
 
 
-<script>document.addEventListener("DOMContentLoaded", function () {
-    const menuActivador = document.getElementById("menuActivador");
-    const popup = document.getElementById("popup");
-    const menuActivadorInPopup = document.getElementById("menuActivadorInPopup");
-  
-    menuActivador.addEventListener("click", function () {
-      menuActivador.classList.add("open");
-      setTimeout(() => {
-        popup.classList.add("show");
-        menuActivador.style.display = "none";
-        menuActivadorInPopup.style.display = "flex";
-      }, 300);
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuActivador = document.getElementById("menuActivador");
+      const popup = document.getElementById("popup");
+      const menuActivadorInPopup = document.getElementById("menuActivadorInPopup");
+      const logoMobileContainer = document.getElementById("logoMobileContainer");
+
+      // Cuando se hace clic en la hamburguesa (menuActivador)
+      menuActivador.addEventListener("click", function () {
+        menuActivador.classList.add("open");
+        setTimeout(() => {
+          popup.classList.add("show"); // Mostrar el popup
+          logoMobileContainer.style.display = "none"; // Ocultar el logo móvil
+          menuActivador.style.display = "none"; // Ocultar el menú activador original
+          menuActivadorInPopup.style.display = "flex"; // Mostrar la "X"
+        }, 300);
+      });
+
+      // Cuando se hace clic en la "X" dentro del popup
+      menuActivadorInPopup.addEventListener("click", function () {
+        popup.classList.remove("show"); // Ocultar el popup
+        menuActivadorInPopup.style.display = "none"; // Ocultar la "X"
+        menuActivador.style.display = "flex"; // Volver a mostrar el menú activador original
+        logoMobileContainer.style.display = "flex"; // Volver a mostrar el logo móvil
+      });
     });
-  
-    menuActivadorInPopup.addEventListener("click", function () {
-      popup.classList.remove("show");
-      menuActivadorInPopup.style.display = "none";
-      menuActivador.style.display = "flex";
-      setTimeout(() => {
-        menuActivador.classList.remove("open");
-      }, 10);
-    });
-  });
   </script>
-  </html>
+</body>
+
+</html>

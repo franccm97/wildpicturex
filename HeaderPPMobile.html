@@ -13,9 +13,8 @@
         top: 1;
         flex-direction: column;
         align-items: center;
-        background-color: transparent!important;
-  padding:20px;
-  		
+        background-color: transparent !important;
+        padding: 20px;
       }
 
       .nav-movil-header {
@@ -31,26 +30,23 @@
         justify-content: space-between;
         flex-direction: column;
         cursor: pointer;
-        margin-bottom:20px;
+        margin-bottom: 20px;
       }
 
       .linea-menu {
         height: 2px;
         background-color: black; /* Todas las líneas del menú son negras */
-        transition: all 0.3s;
+        transition: all 0.3s ease;
       }
 
+      /* Transformaciones para una "X" perfecta */
       .activador-menu.open .linea-menu:nth-child(1) {
-        transform: translateY(9px) rotate(45deg);
+        transform: translateY(9px) rotate(45deg); /* Baja más la primera línea y la rota */
         background-color: black;
       }
 
       .activador-menu.open .linea-menu:nth-child(2) {
-        opacity: 0;
-      }
-
-      .activador-menu.open .linea-menu:nth-child(3) {
-        transform: translateY(-9px) rotate(-45deg);
+        transform: translateY(-9px) rotate(-45deg); /* Sube más la segunda línea y la rota */
         background-color: black;
       }
 
@@ -127,34 +123,35 @@
       .input-area {
         flex: 1;
       }
-input.input-personalizado{
-  padding:0px !important;
-}
 
-input{
-  outline:none !important;
-  border-bottom: 1px solid black !important;
-  border-top:none !important;
-  border-left:none !important;
-  border-right:none !important;
-  border-radius:none !important;
-  
-}
+      input.input-personalizado {
+        padding: 0px !important;
+      }
+
+      input {
+        outline: none !important;
+        border-bottom: 1px solid black !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-radius: none !important;
+      }
+
       .input-personalizado {
         width: 100%;
-        border-bottom:1px solid black !important;
+        border-bottom: 1px solid black !important;
         font-size: 13px;
         color: black;
         outline: none !important;
         box-sizing: border-box;
-        border-radius:none !important;
-        padding:none !important;
+        border-radius: none !important;
+        padding: none !important;
       }
 
       .input-personalizado::placeholder {
         color: #bbb;
         text-align: left;
-        font-size:13px
+        font-size: 13px;
       }
 
       .contenedor-boton {
@@ -171,7 +168,6 @@ input{
         font-weight: 500;
         font-family: "Inter", sans-serif;
       }
-
     </style>
   </head>
 
@@ -182,24 +178,21 @@ input{
         <div class="activador-menu" id="activadorMenu">
           <div class="linea-menu"></div>
           <div class="linea-menu"></div>
-          <div class="linea-menu"></div>
         </div>
         <div class="contenedor-logo-movil" id="contenedorLogoMovil">
-      <a href="https://www.wildpictures.xyz/home">
-                <img
-            src="http://www.wildpictures.xyz/wp-content/uploads/2024/09/Logo-2-1.svg"
-            alt="Logo"
-            class="logo-movil"
-          />
-      </a>
-
+          <a href="https://www.wildpictures.xyz/home">
+            <img
+              src="http://www.wildpictures.xyz/wp-content/uploads/2024/09/Logo-2-1.svg"
+              alt="Logo"
+              class="logo-movil"
+            />
+          </a>
         </div>
       </div>
 
       <!-- Popup que cubre toda la pantalla -->
       <div class="popup-overlay" id="popupOverlay">
         <div class="activador-menu open" id="activadorMenuPopup">
-          <div class="linea-menu"></div>
           <div class="linea-menu"></div>
           <div class="linea-menu"></div>
         </div>
